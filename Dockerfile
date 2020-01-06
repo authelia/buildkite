@@ -23,14 +23,16 @@ COPY root/ /
 # modifications
 RUN \
  echo "**** Install Authelia CI pre-requisites ****" && \
+   echo "http://dl-cdn.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories && \
+   echo "http://dl-cdn.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories && \
    echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
    echo "@edget http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
    apk add --no-cache \
      bash \
      ca-certificates \
      coreutils \
-     chromium \
-     chromium-chromedriver \
+     chromium==77.0.3865.120-r0 \
+     chromium-chromedriver==77.0.3865.120-r0 \
      curl \
      docker-compose \
      git \

@@ -96,5 +96,6 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **07/01/2019:** Pin chromium and chromedriver to 77.0.3865.120-r0
 - **07/01/2019:** Include tar and zstd packages
 - **19/12/2019:** Initial release
