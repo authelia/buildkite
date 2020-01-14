@@ -17,8 +17,6 @@ TERM="xterm"
 ENV BUILDKITE_AGENT_CONFIG=/buildkite/buildkite-agent.cfg \
 GOPATH="/buildkite/.go"
 
-# add local files
-COPY root/ /
 
 # modifications
 RUN \
@@ -75,7 +73,10 @@ RUN \
  echo "**** Cleanup ****" && \
    rm -rf /tmp/*
 
+# add local files
+COPY root/ /
+
 # ports and volumes
 VOLUME /buildkite
 
-ENTRYPOINT ["/init"]
+ENTRYPOINT ["/entrypoint.sh"]

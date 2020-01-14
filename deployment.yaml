@@ -1,0 +1,60 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buildkite-agent
+  labels:
+    app: buildkite-agent
+  namespace: buildkite
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: buildkite-agent
+  template:
+    metadata:
+      labels:
+        app: buildkite-agent
+    spec:
+      containers:
+      - image: 127.0.0.1:5000/buildkite-authelia:0.0.4
+        name: buildkite-authelia
+        env:
+        - name: BUILDKITE_AGENT_NAME
+          value: clems4ever-agent
+        - name: BUILDKITE_AGENT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: buildkite-agent
+              key: token
+        - name: SSH_PRIVATE_RSA_KEY
+          valueFrom:
+            secretKeyRef:
+              name: thirdparties-credentials
+              key: id_rsa
+        - name: BUILDKITE_AGENT_TAGS
+          value: build=true,suite=all,suite=kubernetes
+        - name: PUID
+          value: "1000"
+        - name: GUID
+          value: "1000"
+        - name: TZ
+          value: France/Paris
+        volumeMounts:
+        - mountPath: "/buildkite/.go"
+          name: go-cache
+        - mountPath: "/data/buildkite"
+          name: credentials
+      volumes:
+        - name: go-cache
+          hostPath:
+            path: /data/buildkite/.go
+            type: Directory
+        - name: credentials
+          secret:
+            secretName: thirdparties-credentials
+            items:
+            - key: environment
+              path: hooks/environment
+            - key: config.json
+              path: .docker/config.json
