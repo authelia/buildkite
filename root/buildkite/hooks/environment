@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -eu
+
+echo "--- :sparkles: Setting environment variables"
+
+export DOCKER_USERNAME="<USERNAMEHERE>"
+export DOCKER_PASSWORD='<PASSWORDHERE>'
+export GITHUB_TOKEN="<TOKENHERE>"

@@ -80,7 +80,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-v /buildkite/.docker` | Docker `config.json` stored here for permissions |
 | `-v /buildkite/.ssh` | SSH `id_rsa` and `ida_rsa.pub` stored here for [GitHub cloning](https://buildkite.com/docs/agent/v3/ssh-keys) |
 | `-v /buildkite/.go` | $GOPATH, set this location to share cache between multiple node containers |
-| `-v /buildkite/hooks` | Used to provide secrets in to Buildkite such as `DOCKER_USERNAME` `DOCKER_PASSWORD` and `GITHUB_TOKEN` for publish and clean up steps |
+| `-v /buildkite/hooks` | Directory used to provide [agent based hooks](https://buildkite.com/docs/agent/v3/hooks) `/buildkite/hooks/environment` is used to provide secrets in to Buildkite such as `DOCKER_USERNAME` `DOCKER_PASSWORD` and `GITHUB_TOKEN` for publish and clean up steps |
 
 ## User / Group Identifiers
 
@@ -96,6 +96,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **14/01/2019:** Include `/buildkite/hooks/environment` example and clarify hooks explanation
 - **07/01/2019:** Pin chromium and chromedriver to 77.0.3865.120-r0
 - **07/01/2019:** Include tar and zstd packages
 - **19/12/2019:** Initial release
