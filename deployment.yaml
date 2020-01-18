@@ -7,7 +7,7 @@ metadata:
     app: buildkite-agent
   namespace: buildkite
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: buildkite-agent
@@ -16,9 +16,12 @@ spec:
       labels:
         app: buildkite-agent
     spec:
+      terminationGracePeriodSeconds: 30
       containers:
-      - image: 127.0.0.1:5000/buildkite-authelia:0.0.4
+      - image: 127.0.0.1:5000/buildkite-authelia
         name: buildkite-authelia
+        securityContext:
+          privileged: true
         env:
         - name: BUILDKITE_AGENT_NAME
           value: clems4ever-agent
@@ -34,6 +37,8 @@ spec:
               key: id_rsa
         - name: BUILDKITE_AGENT_TAGS
           value: build=true,suite=all,suite=kubernetes
+        - name: BUILDKITE_AGENT_PRIORITY
+          value: "4"
         - name: PUID
           value: "1000"
         - name: GUID
@@ -41,15 +46,32 @@ spec:
         - name: TZ
           value: France/Paris
         volumeMounts:
-        - mountPath: "/buildkite/.go"
+        - mountPath: /buildkite/.go
           name: go-cache
-        - mountPath: "/data/buildkite"
+        - mountPath: "/lib/modules"
+          name: lib-modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+        - mountPath: /data/buildkite
           name: credentials
+        - mountPath: /var/lib/docker
+          name: docker
       volumes:
         - name: go-cache
           hostPath:
             path: /data/buildkite/.go
             type: Directory
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+            type: Directory
+        - name: cgroup
+          hostPath:
+            path: /sys/fs/cgroup
+            type: Directory
+        - name: docker
+          emptyDir: {}
         - name: credentials
           secret:
             secretName: thirdparties-credentials
@@ -58,3 +80,4 @@ spec:
               path: hooks/environment
             - key: config.json
               path: .docker/config.json
+
