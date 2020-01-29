@@ -5,7 +5,7 @@ LABEL maintainer="Nightah"
 
 # set application versions
 ARG ARCH="amd64"
-ARG BUILDKITE_VERSION="3.17.0"
+ARG BUILDKITE_VERSION="3.18.0"
 ARG OVERLAY_VERSION="v1.22.1.0"
 
 # environment variables
