@@ -51,7 +51,9 @@ RUN \
      tar \
      tzdata \
      yarn@edge \
-     zstd && \
+     zstd \
+     ruby && \
+ gem install bundler && \
  echo "**** Add s6 overlay ****" && \
    cd /tmp && \
    curl -Lfs -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
