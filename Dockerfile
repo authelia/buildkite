@@ -53,7 +53,6 @@ RUN \
      yarn@edge \
      zstd \
      ruby && \
- gem install bundler && \
  echo "**** Add s6 overlay ****" && \
    cd /tmp && \
    curl -Lfs -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
@@ -75,7 +74,9 @@ RUN \
    mv buildkite-agent.cfg /buildkite/buildkite-agent.cfg && \
    mv buildkite-agent /usr/local/bin/buildkite-agent && \
  echo "**** Cleanup ****" && \
-   rm -rf /tmp/*
+   rm -rf /tmp/* && \
+ echo "**** Install bundler ****" && \
+   gem install bundler
 
 # ports and volumes
 VOLUME /buildkite
