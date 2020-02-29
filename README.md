@@ -29,8 +29,10 @@ docker create \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Australia/Melbourne \
-  -v <path to data>/docker:/buildkite/.docker \
   -v <path to data>/ssh:/buildkite/.ssh \
+  -v <path to data>/bundle:/buildkite/.bundle \
+  -v <path to data>/cache:/buildkite/.cache \
+  -v <path to data>/gem:/buildkite/.gem \
   -v <path to data>/go:/buildkite/.go \
   -v <path to data>/hooks:/buildkite/hooks \
   --restart unless-stopped \
@@ -50,9 +52,11 @@ services:
     container_name: buildkite1
     privileged: true
     volumes:
-      - <path to data>/docker:/buildkite/.docker
-      - <path to data>/ssh:/buildkite/.ssh
-      - <path to data>/go:/buildkite/.go
+      - <path to data>/ssh:/buildkite/.ssh \
+      - <path to data>/bundle:/buildkite/.bundle \
+      - <path to data>/cache:/buildkite/.cache \
+      - <path to data>/gem:/buildkite/.gem \
+      - <path to data>/go:/buildkite/.go \
       - <path to data>/hooks:/buildkite/hooks
     restart: unless-stopped
     environment:
@@ -77,8 +81,10 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Australia/Melbourne` | for setting timezone information, eg Australia/Melbourne |
-| `-v /buildkite/.docker` | Docker `config.json` stored here for permissions |
 | `-v /buildkite/.ssh` | SSH `id_rsa` and `ida_rsa.pub` stored here for [GitHub cloning](https://buildkite.com/docs/agent/v3/ssh-keys) |
+| `-v /buildkite/.bundle` | $BUNDLE_PATH, set this location to share cache between multiple node containers |
+| `-v /buildkite/.cache` | $YARN_CACHE_FOLDER, set this location to share cache between multiple node containers |
+| `-v /buildkite/.gem` | $GEM_HOME, set this location to share cache between multiple node containers |
 | `-v /buildkite/.go` | $GOPATH, set this location to share cache between multiple node containers |
 | `-v /buildkite/hooks` | Directory used to provide [agent based hooks](https://buildkite.com/docs/agent/v3/hooks) `/buildkite/hooks/environment` is used to provide secrets in to Buildkite such as `DOCKER_USERNAME` `DOCKER_PASSWORD` and `GITHUB_TOKEN` for publish and clean up steps |
 
