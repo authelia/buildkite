@@ -96,7 +96,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
-- **28/02/2020:** Install ruby and bundler to generate doc website with Jekyll.
+- **28/02/2020:** Include ruby and bundler to generate doc website with Jekyll
 - **12/02/2020:** Update buildkite-agent to v3.20.0
 - **30/01/2020:** Update buildkite-agent to v3.19.0
 - **29/01/2020:** Update buildkite-agent to v3.18.0

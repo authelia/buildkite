@@ -35,24 +35,29 @@ RUN \
      chromium-chromedriver==77.0.3865.120-r0 \
      curl \
      docker-compose \
+     g++ \
      git \
      hub@edget \
      go@edge \
      jq \
      libc6-compat \
      libstdc++ \
+     make \
      nodejs \
      npm \
      openssh-client \
      perl \
      rsync \
+     ruby-bigdecimal \
+     ruby-dev \
+     ruby-json \
      shadow \
      sudo \
      tar \
      tzdata \
      yarn@edge \
-     zstd \
-     ruby && \
+     zlib-dev \
+     zstd && \
  echo "**** Add s6 overlay ****" && \
    cd /tmp && \
    curl -Lfs -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
@@ -73,10 +78,10 @@ RUN \
    sed -i 's/\$HOME\/.buildkite-agent/\/buildkite/g' buildkite-agent.cfg && \
    mv buildkite-agent.cfg /buildkite/buildkite-agent.cfg && \
    mv buildkite-agent /usr/local/bin/buildkite-agent && \
+ echo "**** Install Ruby bundler ****" && \
+   gem install bundler && \
  echo "**** Cleanup ****" && \
-   rm -rf /tmp/* && \
- echo "**** Install bundler ****" && \
-   gem install bundler
+   rm -rf /tmp/*
 
 # ports and volumes
 VOLUME /buildkite
