@@ -51,6 +51,7 @@ RUN \
      ruby-bigdecimal \
      ruby-dev \
      ruby-json \
+     sed \
      shadow \
      sudo \
      tar \
