@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **10/03/2020:** Set $BUNDLE_PATH for ruby
 - **09/03/2020:** Include gnu variant of sed
 - **28/02/2020:** Include ruby and bundler to generate doc website with Jekyll
 - **12/02/2020:** Update buildkite-agent to v3.20.0

@@ -14,7 +14,8 @@ HOME="/buildkite" \
 TERM="xterm"
 
 # set runtime variables
-ENV BUILDKITE_AGENT_CONFIG=/buildkite/buildkite-agent.cfg \
+ENV BUILDKITE_AGENT_CONFIG="/buildkite/buildkite-agent.cfg" \
+BUNDLE_PATH="/buildkite/.gem" \
 GOPATH="/buildkite/.go"
 
 # add local files
