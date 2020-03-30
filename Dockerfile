@@ -32,8 +32,8 @@ RUN \
      bash \
      ca-certificates \
      coreutils \
-     chromium==77.0.3865.120-r0 \
-     chromium-chromedriver==77.0.3865.120-r0 \
+     chromium@edge==80.0.3987.132-r2 \
+     chromium-chromedriver@edge==80.0.3987.132-r2 \
      curl \
      docker-compose \
      g++ \
