@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **06/04/2020:** Include golangci-lint and reviewdog
 - **02/04/2020:** Update chromium and chromedriver to 80.0.3987.132-r2
 - **10/03/2020:** Set $BUNDLE_PATH for ruby
 - **09/03/2020:** Include gnu variant of sed

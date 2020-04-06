@@ -7,6 +7,8 @@ LABEL maintainer="Nightah"
 ARG ARCH="amd64"
 ARG BUILDKITE_VERSION="3.20.0"
 ARG OVERLAY_VERSION="v1.22.1.0"
+ARG GOLANGCILINT_VERSION="v1.24.0"
+ARG REVIEWDOG_VERSION="v0.9.17"
 
 # environment variables
 ENV PS1="$(whoami)@$(hostname):$(pwd)$ " \
@@ -24,16 +26,14 @@ COPY root/ /
 # modifications
 RUN \
  echo "**** Install Authelia CI pre-requisites ****" && \
-   echo "http://dl-cdn.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories && \
-   echo "http://dl-cdn.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories && \
    echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
    echo "@edget http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
    apk add --no-cache \
      bash \
      ca-certificates \
      coreutils \
-     chromium@edge==80.0.3987.132-r2 \
-     chromium-chromedriver@edge==80.0.3987.132-r2 \
+     chromium@edge \
+     chromium-chromedriver@edge \
      curl \
      docker-compose \
      g++ \
@@ -80,6 +80,9 @@ RUN \
    sed -i 's/\$HOME\/.buildkite-agent/\/buildkite/g' buildkite-agent.cfg && \
    mv buildkite-agent.cfg /buildkite/buildkite-agent.cfg && \
    mv buildkite-agent /usr/local/bin/buildkite-agent && \
+ echo "**** Install Linting tools ****" && \
+   curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /bin ${GOLANGCILINT_VERSION} && \
+   curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b /bin ${REVIEWDOG_VERSION} && \
  echo "**** Install Ruby bundler ****" && \
    gem install bundler && \
  echo "**** Cleanup ****" && \
