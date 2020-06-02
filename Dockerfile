@@ -36,6 +36,7 @@ RUN \
      chromium-chromedriver@edge \
      curl \
      docker-compose \
+     findutils \
      g++ \
      git \
      hub@edget \
