@@ -6,9 +6,9 @@ LABEL maintainer="Nightah"
 # set application versions
 ARG ARCH="amd64"
 ARG BUILDKITE_VERSION="3.24.0"
-ARG OVERLAY_VERSION="v2.1.0.0"
+ARG OVERLAY_VERSION="v2.1.0.2"
 ARG GOLANGCILINT_VERSION="v1.31.0"
-ARG REVIEWDOG_VERSION="v0.10.2"
+ARG REVIEWDOG_VERSION="v0.11.0"
 
 # environment variables
 ENV PS1="$(whoami)@$(hostname):$(pwd)$ " \
