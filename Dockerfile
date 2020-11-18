@@ -84,6 +84,8 @@ RUN \
  echo "**** Install Linting tools ****" && \
    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /bin ${GOLANGCILINT_VERSION} && \
    curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b /bin ${REVIEWDOG_VERSION} && \
+ echo "**** Install Coverage tools ****" && \
+   yarn global add nyc && \
  echo "**** Install Ruby bundler ****" && \
    gem install bundler && \
  echo "**** Cleanup ****" && \
