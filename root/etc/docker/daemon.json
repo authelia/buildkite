@@ -1,3 +1,9 @@
 {
+  "default-runtime": "crun",
+  "runtimes": {
+    "crun": {
+      "path": "/usr/bin/crun"
+    }
+  },
   "registry-mirrors": ["http://registrycache:5000"]
 }

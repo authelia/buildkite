@@ -34,6 +34,7 @@ RUN \
      coreutils \
      chromium@edge \
      chromium-chromedriver@edge \
+     crun@edge \
      curl \
      docker-compose \
      findutils \

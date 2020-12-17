@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **17/12/2020:** Include crun OCI runtime and set as Docker default
 - **04/12/2020:** Update buildkite-agent to v3.26.0
 - **24/11/2020:** Update golangci-lint to v1.33.0
 - **18/11/2020:** Include nyc package for frontend coverage
