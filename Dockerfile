@@ -52,6 +52,7 @@ RUN \
      perl \
      rsync \
      ruby-bigdecimal \
+     ruby-bundler \
      ruby-dev \
      ruby-json \
      sed \
@@ -87,8 +88,6 @@ RUN \
    curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b /bin ${REVIEWDOG_VERSION} && \
  echo "**** Install Coverage tools ****" && \
    yarn global add nyc && \
- echo "**** Install Ruby bundler ****" && \
-   gem install bundler && \
  echo "**** Cleanup ****" && \
    rm -rf /tmp/*
 
