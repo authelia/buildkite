@@ -9,6 +9,10 @@ ARG BUILDKITE_VERSION="3.26.0"
 ARG OVERLAY_VERSION="v2.1.0.2"
 ARG GOLANGCILINT_VERSION="v1.33.0"
 ARG REVIEWDOG_VERSION="v0.11.0"
+ARG CT_VERSION="3.3.1"
+ARG CR_VERSION="1.1.1"
+ARG HELM_VERSION="v3.4.1"
+ARG KUBECTL_VERSION="v1.20.0"
 
 # environment variables
 ENV PS1="$(whoami)@$(hostname):$(pwd)$ " \
@@ -50,6 +54,9 @@ RUN \
      npm \
      openssh-client \
      perl \
+     py3-pip \
+     py3-wheel \
+     python3 \
      rsync \
      ruby-bigdecimal \
      ruby-bundler \
@@ -63,10 +70,24 @@ RUN \
      yarn@edge \
      zlib-dev \
      zstd && \
+ echo "**** Add Python Packages ****" && \
+   pip install yamllint yamale && \
  echo "**** Add s6 overlay ****" && \
    cd /tmp && \
    curl -Lfs -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
    tar xfz s6-overlay.tar.gz -C / && \
+ echo "**** Add k8s/helm tools ****" && \
+   curl -Lfs -o ct.tar.gz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_${ARCH}.tar.gz" && \
+   curl -Lfs -o cr.tar.gz "https://github.com/helm/chart-releaser/releases/download/v${CR_VERSION}/chart-releaser_${CR_VERSION}_linux_${ARCH}.tar.gz" && \
+   curl -Lfs -o helm.tar.gz "https://get.helm.sh/helm-${HELM_VERSION}-linux-${ARCH}.tar.gz" && \
+   curl -LfsO "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" && \
+   tar xfz ct.tar.gz -C /tmp && \
+   tar xfz cr.tar.gz -C /tmp && \
+   tar xfz helm.tar.gz -C /tmp && \
+   chmod +x ct cr linux-${ARCH}/helm kubectl && \
+   mv -t /usr/local/bin/ ct cr linux-${ARCH}/helm kubectl && \
+   mkdir /etc/ct && \
+   mv -t /etc/ct/ etc/chart_schema.yaml etc/lintconf.yaml && \
  echo "**** Patch CVE-2019-5021 ****" && \
    sed -i -e 's/^root::/root:!:/' /etc/shadow && \
  echo "**** Create buildkite user and make our folders ****" && \
