@@ -20,7 +20,7 @@ ENV BUILDKITE_AGENT_CONFIG="/buildkite/buildkite-agent.cfg" \
 BUNDLE_PATH="/buildkite/.gem" \
 GOPATH="/buildkite/.go"
 
-# add local files
+# add local files
 COPY root/ /
 
 # modifications
@@ -86,6 +86,7 @@ RUN \
  echo "**** Install Linting tools ****" && \
    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /bin ${GOLANGCILINT_VERSION} && \
    curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b /bin ${REVIEWDOG_VERSION} && \
+   yarn global add eslint && \
  echo "**** Install Coverage tools ****" && \
    yarn global add nyc && \
  echo "**** Cleanup ****" && \
