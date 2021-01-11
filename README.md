@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **12/01/2021:** Update golangci-lint to v1.35.2
 - **29/12/2020:** Update golangci-lint to v1.34.1
 - **29/12/2020:** Include eslint package for frontend coverage
 - **19/12/2020:** Install ruby bundler from alpine package repos
