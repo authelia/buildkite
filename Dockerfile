@@ -89,6 +89,8 @@ RUN \
    yarn global add eslint && \
  echo "**** Install Coverage tools ****" && \
    yarn global add nyc && \
+ echo "**** Install Release tools ****" && \
+   yarn global add conventional-changelog-cli && \
  echo "**** Cleanup ****" && \
    rm -rf /tmp/*
 
