@@ -60,7 +60,6 @@ RUN \
      coreutils \
      chromium@edge \
      chromium-chromedriver@edge \
-     crun@edge \
      docker-compose \
      findutils \
      g++ \
