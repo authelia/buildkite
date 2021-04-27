@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **27/04/2021:** Change entrypoint to dockerd to prevent TLS cert generation issue
 - **22/04/2021:** Update buildkite-agent to v3.29.0 (and helm/kubectl to latest)
 - **24/03/2021:** Update buildkite-agent to v3.28.1
 - **04/03/2021:** Add Helm Chart Tools (helm, ct, cr, yamllint, yamale) and Refactor Layers
