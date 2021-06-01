@@ -102,6 +102,10 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+ARG CT_VERSION="3.4.0"
+ARG CR_VERSION="1.2.1"
+- **01/06/2021:** Update buildkite-agent to v3.30.0, helm to v3.6.0, kubectl to v1.21.1, chart-testing to v3.4.0, and 
+  chart-releaser to v1.2.1
 - **27/04/2021:** Remove crun OCI runtime
 - **27/04/2021:** Change entrypoint to dockerd to prevent TLS cert generation issue
 - **22/04/2021:** Update buildkite-agent to v3.29.0 (and helm/kubectl to latest)
