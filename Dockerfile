@@ -118,8 +118,7 @@ RUN \
  echo "**** Install Linting tools ****" && \
    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /bin ${GOLANGCILINT_VERSION} && \
    curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b /bin ${REVIEWDOG_VERSION} && \
-   yarn global add eslint && \
-   npm install --global markdownlint-cli && \
+   yarn global add eslint markdownlint-cli && \
  echo "**** Install Coverage tools ****" && \
    yarn global add nyc && \
  echo "**** Install Release tools ****" && \
