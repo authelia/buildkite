@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **06/07/2021:** Add markdownlint cli and update helm to v3.6.2
 - **28/06/2021:** Update reviewdog to v0.12.0
 - **21/06/2021:** Update golangci-lint to v1.41.1, helm to v3.6.1, and kubectl to v1.21.2
 - **17/06/2021:** Update golangci-lint to v1.41.0
