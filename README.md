@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **23/07/2021:** Update reviewdog to v0.13.0 and kubectl to v1.21.3
 - **07/07/2021:** Update buildkite-agent to v3.31.0
 - **06/07/2021:** Add markdownlint cli and update helm to v3.6.2
 - **28/06/2021:** Update reviewdog to v0.12.0
