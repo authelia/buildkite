@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **04/08/2021:** Add crun OCI runtime
 - **02/08/2021:** Update buildkite-agent to v3.32.0 and helm to v3.6.3
 - **23/07/2021:** Update reviewdog to v0.13.0 and kubectl to v1.21.3
 - **07/07/2021:** Update buildkite-agent to v3.31.0
