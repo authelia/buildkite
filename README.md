@@ -6,10 +6,10 @@
 
 The [buildkite agent](https://buildkite.com/docs/agent/v3) is a small, reliable and cross-platform build runner that makes it easy to run automated builds on your own infrastructure. Its main responsibilities are polling buildkite.com for work, running build jobs, reporting back the status code and output log of the job, and uploading the job's artifacts.
 
-This custom image is based on the `docker:dind` to provide docker-in-docker alongside Buildkite to support the automated integration cases run for Authelia's CI process.
+This custom image is based on the `docker:dind` to provide docker-in-docker alongside Buildkite to support the automated integration test cases run for Authelia's CI process.
 The image will be re-built if any updates are made to the base `docker:dind` image.
 
-This image shamelessly utilises some of the fine work by the team over at [LinuxServer.io](https://www.linuxserver.io/), credits to their [alpine baseimage](https://github.com/linuxserver/docker-baseimage-alpine/).
+This image shamelessly utilises the fine work by the team over at [LinuxServer.io](https://www.linuxserver.io/), credits to their [alpine baseimage](https://github.com/linuxserver/docker-baseimage-alpine/).
   
 ## Usage
 
@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **26/08/2021:** Update environment hook example
 - **04/08/2021:** Add crun OCI runtime
 - **02/08/2021:** Update buildkite-agent to v3.32.0 and helm to v3.6.3
 - **23/07/2021:** Update reviewdog to v0.13.0 and kubectl to v1.21.3

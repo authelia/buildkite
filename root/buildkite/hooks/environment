@@ -2,8 +2,40 @@
 
 set -eu
 
-echo "--- :sparkles: Setting environment variables"
+if [[ $BUILDKITE_LABEL == ":service_dog: Linting" ]]; then
+  echo "--- :sparkles: Setting environment variables"
 
-export DOCKER_USERNAME="<USERNAMEHERE>"
-export DOCKER_PASSWORD='<PASSWORDHERE>'
-export GITHUB_TOKEN="<TOKENHERE>"
+  export CI_PULL_REQUEST=${BUILDKITE_PULL_REQUEST} CI_REPO_OWNER=${BUILDKITE_PIPELINE_SLUG} CI_REPO_NAME=${BUILDKITE_PIPELINE_SLUG} CI_COMMIT=${BUILDKITE_COMMIT}
+  export REVIEWDOG_TOKEN="<REVIEWDOG_TOKEN>>"
+
+  if [[ $BUILDKITE_PULL_REQUEST != "false" ]]; then
+    export REVIEWDOG_GITHUB_API_TOKEN="<REVIEWDOG_GITHUB_API_TOKEN>"
+  fi
+fi
+
+if [[ $BUILDKITE_LABEL == ":hammer_and_wrench: Unit Test" ]] || [[ $BUILDKITE_LABEL =~ ":selenium:" ]]; then
+  echo "--- :sparkles: Setting environment variables"
+
+  export CODECOV_TOKEN="<TOKENHERE>"
+fi
+
+if [[ $BUILDKITE_LABEL =~ ":docker: Deploy" ]]; then
+  echo "--- :sparkles: Setting environment variables"
+
+  export DOCKER_USERNAME="<DOCKER_USERNAME>" DOCKER_PASSWORD='<DOCKER_PASSWORD>' GHCR_USERNAME="<GHCR_USERNAME>" GHCR_PASSWORD="<GHCR_PASSWORD>"
+fi
+
+if [[ $BUILDKITE_BRANCH =~ ^v.* ]] && [[ $BUILDKITE_PULL_REQUEST == "false"  ]]; then
+  if [[ $BUILDKITE_LABEL == ":github: Deploy Artifacts" ]]; then
+    echo "--- :sparkles: Setting environment variables"
+
+    export GITHUB_TOKEN="<GITHUB_TOKEN>"
+  fi
+
+  if [[ $BUILDKITE_LABEL == ":debian: :fedora: :ubuntu: Deploy APT" ]]; then
+    echo "--- :sparkles: Setting environment variables"
+
+    export BALTO_TOKEN="<BALTO_TOKEN>"
+  fi
+fi
+
