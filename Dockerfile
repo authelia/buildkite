@@ -5,9 +5,9 @@ LABEL maintainer="Nightah"
 
 # set application versions
 ARG ARCH="amd64"
-ARG BUILDKITE_VERSION="3.32.0"
+ARG BUILDKITE_VERSION="3.32.3"
 ARG OVERLAY_VERSION="v2.2.0.3"
-ARG GOLANGCILINT_VERSION="v1.41.1"
+ARG GOLANGCILINT_VERSION="v1.42.0"
 ARG REVIEWDOG_VERSION="v0.13.0"
 ARG CT_VERSION="3.4.0"
 ARG CR_VERSION="1.2.1"
@@ -58,8 +58,8 @@ RUN \
      bash \
      ca-certificates \
      coreutils \
-     chromium@edge \
-     chromium-chromedriver@edge \
+     chromium \
+     chromium-chromedriver \
      crun@edge \
      docker-compose \
      findutils \
