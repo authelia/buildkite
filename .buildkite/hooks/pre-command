@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+if [[ "${BUILDKITE_LABEL}" == ":docker: Build and Deploy" ]]; then
+  docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+fi
