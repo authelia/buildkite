@@ -23,4 +23,6 @@ steps:
   - command: "curl \"https://ci.nerv.com.au/readmesync/update?github_repo=${REPOSITORY}&dockerhub_repo=${REPOSITORY}\""
     label: ":docker: Update README.md"
     if: build.branch == "master"
+    agents:
+      upload: "fast"
 EOF
