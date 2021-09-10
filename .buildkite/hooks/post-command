@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-set +u
+set -u
 
 if [[ "${BUILDKITE_LABEL}" == ":docker: Build and Deploy" ]]; then
   docker logout
