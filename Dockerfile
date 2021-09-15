@@ -123,7 +123,6 @@ RUN \
     chmod +x /buildkite/.docker/cli-plugins/docker-buildx && \
     docker buildx install && \
     docker buildx create --name buildx --use && \
-    docker buildx inspect --bootstrap && \
   echo "**** Install Linting tools ****" && \
     curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin ${GOLANGCILINT_VERSION} && \
     curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin ${REVIEWDOG_VERSION} && \
