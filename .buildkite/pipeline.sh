@@ -13,8 +13,7 @@ cat << EOF
 steps:
   - label: ":docker: Build and Deploy"
     commands:
-      - "docker build --tag ${REPOSITORY}:${TAG} --no-cache=true --pull=true ."
-      - "docker push ${REPOSITORY}:${TAG}"
+      - "docker build --tag ${REPOSITORY}:${TAG} --no-cache=true --pull=true --push ."
     concurrency: 1
     concurrency_group: "buildkite-deployments"
     agents:
@@ -23,8 +22,7 @@ steps:
 
   - label: ":docker: Build and Deploy"
     commands:
-      - "docker build --tag ${REPOSITORY}:${TAG} --no-cache=true --pull=true ."
-      - "docker push ${REPOSITORY}:${TAG}"
+      - "docker build --tag ${REPOSITORY}:${TAG} --no-cache=true --pull=true --push ."
     agents:
       upload: "fast"
     if: build.branch != "master"
