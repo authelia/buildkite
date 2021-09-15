@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **15/09/2021:** Add /buildkite/.go/bin directory to $PATH
 - **07/09/2021:** Update golangci-lint to v1.42.1
 - **02/09/2021:** Update buildkite-agent to v3.32.3 and golangci-lint to v1.42.0
 - **26/08/2021:** Update environment hook example

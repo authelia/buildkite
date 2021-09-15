@@ -15,7 +15,8 @@ ARG HELM_VERSION="v3.6.3"
 ARG KUBECTL_VERSION="v1.21.3"
 
 # environment variables
-ENV PS1="$(whoami)@$(hostname):$(pwd)$ " \
+ENV PATH="$PATH:/buildkite/.go/bin" \
+PS1="$(whoami)@$(hostname):$(pwd)$ " \
 HOME="/buildkite" \
 TERM="xterm"
 
