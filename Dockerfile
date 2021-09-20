@@ -7,6 +7,7 @@ LABEL maintainer="Nightah"
 ARG ARCH="amd64"
 ARG BUILDKITE_VERSION="3.32.3"
 ARG BUILDX_VERSION="v0.6.3"
+ARG CC_VERSION="v15"
 ARG OVERLAY_VERSION="v2.2.0.3"
 ARG GOLANGCILINT_VERSION="v1.42.1"
 ARG REVIEWDOG_VERSION="v0.13.0"
@@ -99,6 +100,9 @@ RUN \
     cd /tmp && \
     curl -Lfs -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
     tar xfz s6-overlay.tar.gz -C / && \
+  echo "**** Add musl cross-compilers ****" && \
+    curl -Lfs "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
+    curl -Lfs "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \
   echo "**** Add k8s/helm tools ****" && \
     curl -SsLf -o ct.tar.gz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_${ARCH}.tar.gz" && \
     curl -SsLf -o cr.tar.gz "https://github.com/helm/chart-releaser/releases/download/v${CR_VERSION}/chart-releaser_${CR_VERSION}_linux_${ARCH}.tar.gz" && \
