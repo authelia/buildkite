@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **21/09/2021:** Fix docker socket permissions issue on restart
 - **20/09/2021:** Add musl cross-compilers for hardened binaries
 - **16/09/2021:** Add buildx and set as default docker build command
 - **15/09/2021:** Add /buildkite/.go/bin directory to $PATH
