@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **28/09/2021:** Update update buildkite-agent, helm and kubectl to v3.33.0, v3.7.0 and v1.22.2 respectively
 - **21/09/2021:** Fix docker socket permissions issue on restart
 - **20/09/2021:** Add musl cross-compilers for hardened binaries
 - **16/09/2021:** Add buildx and set as default docker build command
