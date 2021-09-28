@@ -6,6 +6,7 @@ LABEL maintainer="Nightah"
 # set application versions
 ARG ARCH="amd64"
 ARG BUILDKITE_VERSION="3.33.0"
+ARG PNPM_VERSION="v6.14"
 ARG BUILDX_VERSION="v0.6.3"
 ARG CC_VERSION="v15"
 ARG OVERLAY_VERSION="v2.2.0.3"
@@ -89,11 +90,13 @@ RUN \
       shadow \
       sudo \
       tzdata \
-      yarn@edge \
       zlib-dev \
       zstd
 
 RUN \
+  echo "**** Add pnpm ****" && \
+    curl -f https://get.pnpm.io/${PNPM_VERSION}.js | node - add --global pnpm && \
+    pnpm config set --global store-dir ~/.pnpm-store && \
   echo "**** Add Python Packages ****" && \
     pip install yamllint yamale && \
   echo "**** Add s6 overlay ****" && \
@@ -130,13 +133,13 @@ RUN \
   echo "**** Install Linting tools ****" && \
     curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin ${GOLANGCILINT_VERSION} && \
     curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin ${REVIEWDOG_VERSION} && \
-    yarn global add eslint markdownlint-cli && \
+    pnpm add --global eslint markdownlint-cli && \
   echo "**** Install Coverage tools ****" && \
-    yarn global add nyc && \
+    pnpm add --global nyc && \
   echo "**** Install Release tools ****" && \
-    yarn global add conventional-changelog-cli && \
+    pnpm add --global conventional-changelog-cli && \
   echo "**** Cleanup ****" && \
-    rm -rf /tmp/*
+    rm -rf /tmp/* /buildkite/.pnpm-store
 
 # ports and volumes
 VOLUME /buildkite
