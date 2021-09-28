@@ -2,5 +2,17 @@
 set -u
 
 if [[ "${BUILDKITE_LABEL}" == ":docker: Build and Deploy" ]]; then
+  if [[ "${BUILDKITE_BRANCH}" == "master" ]] && [[ "${BUILDKITE_PULL_REQUEST}" == "false" ]]; then
+    echo "--- :docker: Removing tags for deleted branches"
+    anontoken=$(curl -fsL --retry 3 'https://auth.docker.io/token?service=registry.docker.io&scope=repository:authelia/buildkite:pull' | jq -r .token)
+    authtoken=$(curl -fs --retry 3 -H "Content-Type: application/json" -X "POST" -d '{"username": "'${DOCKER_USERNAME}'", "password": "'${DOCKER_PASSWORD}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
+    for BRANCH_TAG in $(dockerbranchtags=$(curl -fsL --retry 3 -H "Authorization: Bearer ${anontoken}" https://registry-1.docker.io/v2/authelia/buildkite/tags/list | jq -r '.tags[]' | \
+    sed -r '/^(latest|([[:digit:]]+)\.?([[:digit:]]+)?\.?([[:digit:]]+)?)$/d' | sort) && \
+    githubbranches=$(curl -fs --retry 3 https://api.github.com/repos/authelia/buildkite/branches | jq -r '.[].name' | sort) && \
+    comm -23 <(echo "${dockerbranchtags}") <(echo "${githubbranches}")); do
+      echo "Removing tag ${BRANCH_TAG} from docker.io"
+      curl -fsL --retry 3 -o /dev/null -X "DELETE" -H "Authorization: JWT ${authtoken}" https://hub.docker.com/v2/repositories/authelia/buildkite/tags/${BRANCH_TAG}/
+    done
+  fi
   docker logout
 fi
