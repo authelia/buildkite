@@ -3,10 +3,14 @@ set -u
 
 REPOSITORY="authelia/buildkite"
 
-if [[ ${BUILDKITE_TAG} == "" ]]; then
-  TAG="latest"
-else
+if [[ ${BUILDKITE_TAG} != "" ]]; then
   TAG=${BUILDKITE_TAG}
+else
+  if [[ ${BUILDKITE_BRANCH} == "master" ]]; then
+    TAG="latest"
+  else
+    TAG=${BUILDKITE_BRANCH}
+  fi
 fi
 
 cat << EOF
