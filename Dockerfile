@@ -5,7 +5,7 @@ LABEL maintainer="Nightah"
 
 # set application versions
 ARG ARCH="amd64"
-ARG BUILDKITE_VERSION="3.33.0"
+ARG BUILDKITE_VERSION="3.33.2"
 ARG PNPM_VERSION="v6.14"
 ARG BUILDX_VERSION="v0.6.3"
 ARG CC_VERSION="v15"
