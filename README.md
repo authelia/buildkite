@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **30/09/2021:** Update buildkite-agent to v3.33.3
 - **29/09/2021:** Update buildkite-agent to v3.33.2
 - **29/09/2021:** Replace yarn with pnpm
 - **28/09/2021:** Update buildkite-agent, helm and kubectl to v3.33.0, v3.7.0 and v1.22.2 respectively
