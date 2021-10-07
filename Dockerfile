@@ -43,9 +43,9 @@ RUN \
 RUN \
   echo "**** Install Buildkite ****" && \
     mkdir -p /buildkite/builds /buildkite/hooks /buildkite/plugins && \
-    curl -Lfs -o /usr/local/bin/ssh-env-config.sh "https://raw.githubusercontent.com/buildkite/docker-ssh-env-config/master/ssh-env-config.sh" && \
+    curl -sSfL -o /usr/local/bin/ssh-env-config.sh "https://raw.githubusercontent.com/buildkite/docker-ssh-env-config/master/ssh-env-config.sh" && \
     chmod +x /usr/local/bin/ssh-env-config.sh && \
-    curl -Lfs -o buildkite-agent.tar.gz "https://github.com/buildkite/agent/releases/download/v${BUILDKITE_VERSION}/buildkite-agent-linux-${ARCH}-${BUILDKITE_VERSION}.tar.gz" && \
+    curl -sSfL -o buildkite-agent.tar.gz "https://github.com/buildkite/agent/releases/download/v${BUILDKITE_VERSION}/buildkite-agent-linux-${ARCH}-${BUILDKITE_VERSION}.tar.gz" && \
     tar xf buildkite-agent.tar.gz && \
     sed -i 's/token=/#token=/g' buildkite-agent.cfg && \
     sed -i 's/\$HOME\/.buildkite-agent/\/buildkite/g' buildkite-agent.cfg && \
@@ -101,11 +101,11 @@ RUN \
     pip install yamllint yamale && \
   echo "**** Add s6 overlay ****" && \
     cd /tmp && \
-    curl -Lfs -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
+    curl -sSfL -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
     tar xfz s6-overlay.tar.gz -C / && \
   echo "**** Add musl cross-compilers ****" && \
-    curl -Lfs "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
-    curl -Lfs "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \
+    curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
+    curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \
   echo "**** Add k8s/helm tools ****" && \
     curl -SsLf -o ct.tar.gz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_${ARCH}.tar.gz" && \
     curl -SsLf -o cr.tar.gz "https://github.com/helm/chart-releaser/releases/download/v${CR_VERSION}/chart-releaser_${CR_VERSION}_linux_${ARCH}.tar.gz" && \
@@ -135,6 +135,8 @@ RUN \
     curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin ${REVIEWDOG_VERSION} && \
     pnpm add --global eslint markdownlint-cli && \
   echo "**** Install Coverage tools ****" && \
+    curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov" && \
+    chmod +x /usr/local/bin/codecov && \
     pnpm add --global nyc && \
   echo "**** Install Release tools ****" && \
     pnpm add --global conventional-changelog-cli && \
