@@ -102,7 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
-- **29/01/2022:** Update pnpm, buildx, and s6-overlay to v6.28, v0.7.1, and v3.0.0.2 respectively,
+- **29/01/2022:** Update buildx and s6-overlay to v0.7.1 and v3.0.0.2 respectively.
 - **29/01/2022:** Update golangci-lint, reviewdog, chart-testing, chart-releaser, helm, and kubectl to v1.44.0, v0.13.1,
   v3.5.0, v1.3.0, v3.8.0, and 1.23.3 respectively.
 - **05/11/2021:** Update pnpm and golangci-lint v6.16 and v1.43.0
