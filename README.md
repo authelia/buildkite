@@ -100,12 +100,6 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
   $ id username
     uid=1000(dockeruser) gid=1000(dockergroup) groups=1000(dockergroup)
 ```
-ARG GOLANGCILINT_VERSION="v1.44.0"
-ARG REVIEWDOG_VERSION="v0.13.1"
-ARG CT_VERSION="3.5.0"
-ARG CR_VERSION="1.3.0"
-ARG HELM_VERSION="v3.8.0"
-ARG KUBECTL_VERSION="v1.23.3"
 
 ## Version
 - **29/01/2022:** Update golangci-lint, reviewdog, chart-testing, chart-releaser, helm, and kubectl to v1.44.0, v0.13.1,
