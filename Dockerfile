@@ -102,8 +102,8 @@ RUN \
     pip install yamllint yamale && \
   echo "**** Add s6 overlay ****" && \
     cd /tmp && \
-    curl -sSfL -o s6-overlay-noarch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-noarch-${OVERLAY_VERSION}.tar.gz" && \
-    curl -sSfL -o s6-overlay.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH_ALT}-${OVERLAY_VERSION}.tar.gz" && \
+    curl -sSfL -o s6-overlay-noarch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-noarch-${OVERLAY_VERSION}.tar.xz" && \
+    curl -sSfL -o s6-overlay.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH_ALT}-${OVERLAY_VERSION}.tar.xz" && \
     tar -C / -xfJp s6-overlay-noarch.tar.xz && \
     tar -C / -xfJp s6-overlay.tar.xz && \
   echo "**** Add musl cross-compilers ****" && \
