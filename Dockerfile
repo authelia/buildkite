@@ -29,6 +29,8 @@ ENV BUILDKITE_AGENT_CONFIG="/buildkite/buildkite-agent.cfg" \
 BUNDLE_PATH="/buildkite/.gem" \
 GOPATH="/buildkite/.go"
 
+WORKDIR /tmp
+
 # add local files
 COPY root/ /
 
@@ -101,11 +103,14 @@ RUN \
   echo "**** Add Python Packages ****" && \
     pip install yamllint yamale && \
   echo "**** Add s6 overlay ****" && \
-    cd /tmp && \
     curl -sSfL -o s6-overlay-noarch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-noarch-${OVERLAY_VERSION}.tar.xz" && \
     curl -sSfL -o s6-overlay.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH_ALT}-${OVERLAY_VERSION}.tar.xz" && \
+    curl -sSfL -o s6-overlay-symlinks-noarch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-symlinks-noarch-${OVERLAY_VERSION}.tar.xz" && \
+    curl -sSfL -o s6-overlay-symlinks-arch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-symlinks-arch-${OVERLAY_VERSION}.tar.xz" && \
     tar -C / -Jpxf s6-overlay-noarch.tar.xz && \
     tar -C / -Jpxf s6-overlay.tar.xz && \
+    tar -C / -Jpxf s6-overlay-symlinks-noarch.tar.xz && \
+    tar -C / -Jpxf s6-overlay-symlinks-arch.tar.xz && \
   echo "**** Add musl cross-compilers ****" && \
     curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
     curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \
@@ -147,6 +152,9 @@ RUN \
     rm -rf /tmp/* /buildkite/.pnpm-store
 
 # ports and volumes
+
 VOLUME /buildkite
+
+WORKDIR /
 
 ENTRYPOINT ["/init"]

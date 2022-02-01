@@ -1,0 +1,2 @@
+#!/usr/bin/with-contenv bash
+exec /scripts/docker-conf.sh
