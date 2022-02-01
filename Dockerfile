@@ -10,7 +10,7 @@ ARG BUILDKITE_VERSION="3.33.3"
 ARG PNPM_VERSION="v6.16"
 ARG BUILDX_VERSION="v0.7.1"
 ARG CC_VERSION="v15"
-ARG OVERLAY_VERSION="3.0.0.2"
+ARG OVERLAY_VERSION="2.2.0.3"
 ARG GOLANGCILINT_VERSION="v1.44.0"
 ARG REVIEWDOG_VERSION="v0.13.1"
 ARG CT_VERSION="3.5.0"
@@ -19,7 +19,7 @@ ARG HELM_VERSION="v3.8.0"
 ARG KUBECTL_VERSION="v1.23.3"
 
 # environment variables
-ENV PATH="$PATH:/buildkite/.go/bin:/command" \
+ENV PATH="$PATH:/buildkite/.go/bin" \
 PS1="$(whoami)@$(hostname):$(pwd)$ " \
 HOME="/buildkite" \
 TERM="xterm"
@@ -102,10 +102,8 @@ RUN \
     pip install yamllint yamale && \
   echo "**** Add s6 overlay ****" && \
     cd /tmp && \
-    curl -sSfL -o s6-overlay-noarch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-noarch-${OVERLAY_VERSION}.tar.xz" && \
-    curl -sSfL -o s6-overlay.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH_ALT}-${OVERLAY_VERSION}.tar.xz" && \
-    tar -C / -Jpxf s6-overlay-noarch.tar.xz && \
-    tar -C / -Jpxf s6-overlay.tar.xz && \
+    curl -sSfL -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
+    tar -C / -zxf s6-overlay.tar.gz && \
   echo "**** Add musl cross-compilers ****" && \
     curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
     curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \
