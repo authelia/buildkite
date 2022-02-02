@@ -1,4 +1,4 @@
-#!/command/with-contenv bash
+#!/usr/bin/with-contenv bash
 
 while [ ! -S "/run/docker.sock" ];
 do
