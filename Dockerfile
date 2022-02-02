@@ -101,7 +101,7 @@ RUN \
     pip install yamllint yamale && \
   echo "**** Add s6 overlay ****" && \
     cd /tmp && \
-    curl -sSfL -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
+    curl -sSfL -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
     tar xfz s6-overlay.tar.gz -C / && \
   echo "**** Add musl cross-compilers ****" && \
     curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
