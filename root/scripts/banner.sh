@@ -1,6 +1,12 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 
-cat << 'EOF'
+PUID=${PUID:-911}
+PGID=${PGID:-911}
+
+groupmod -o -g "$PGID" buildkite
+usermod -o -u "$PUID" buildkite
+
+cat <<'EOF'
 --------------------------------------------
    / \  _   _| |_| |__   ___| (_) __ _
   / _ \| | | | __| '_ \ / _ \ | |/ _` |
@@ -20,3 +26,4 @@ User uid:    $(id -u buildkite)
 User gid:    $(id -g buildkite)
 --------------------------------------------
 "
+chown buildkite:buildkite /buildkite
