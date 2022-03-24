@@ -5,17 +5,17 @@ LABEL maintainer="Nightah"
 
 # set application versions
 ARG ARCH="amd64"
-ARG BUILDKITE_VERSION="3.33.3"
-ARG PNPM_VERSION="v6.16"
-ARG BUILDX_VERSION="v0.7.1"
-ARG CC_VERSION="v15"
+ARG BUILDKITE_VERSION="3.34.1"
+ARG PNPM_VERSION="6.16"
+ARG BUILDX_VERSION="0.8.0"
+ARG CC_VERSION="15"
 ARG OVERLAY_VERSION="2.2.0.3"
-ARG GOLANGCILINT_VERSION="v1.44.0"
-ARG REVIEWDOG_VERSION="v0.13.1"
-ARG CT_VERSION="3.5.0"
+ARG GOLANGCILINT_VERSION="1.44.2"
+ARG REVIEWDOG_VERSION="0.14.0"
+ARG CT_VERSION="3.5.1"
 ARG CR_VERSION="1.3.0"
-ARG HELM_VERSION="v3.8.0"
-ARG KUBECTL_VERSION="v1.23.3"
+ARG HELM_VERSION="3.8.1"
+ARG KUBECTL_VERSION="1.23.5"
 
 # environment variables
 ENV PATH="$PATH:/buildkite/.go/bin" \
@@ -94,23 +94,23 @@ RUN \
       zstd
 
 RUN \
-  echo "**** Add pnpm ****" && \
-    curl -f https://get.pnpm.io/${PNPM_VERSION}.js | node - add --global pnpm && \
-    pnpm config set --global store-dir ~/.pnpm-store && \
+  cd /tmp && \
   echo "**** Add Python Packages ****" && \
     pip install yamllint yamale && \
+  echo "**** Add pnpm ****" && \
+    curl -f https://get.pnpm.io/v${PNPM_VERSION}.js | node - add --global pnpm && \
+    pnpm config set --global store-dir ~/.pnpm-store && \
   echo "**** Add s6 overlay ****" && \
-    cd /tmp && \
     curl -sSfL -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
     tar xfz s6-overlay.tar.gz -C / && \
   echo "**** Add musl cross-compilers ****" && \
-    curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
-    curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \
+    curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/v${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
+    curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/v${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \
   echo "**** Add k8s/helm tools ****" && \
     curl -SsLf -o ct.tar.gz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_${ARCH}.tar.gz" && \
     curl -SsLf -o cr.tar.gz "https://github.com/helm/chart-releaser/releases/download/v${CR_VERSION}/chart-releaser_${CR_VERSION}_linux_${ARCH}.tar.gz" && \
-    curl -sSLf -o helm.tar.gz "https://get.helm.sh/helm-${HELM_VERSION}-linux-${ARCH}.tar.gz" && \
-    curl -sSLfO "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" && \
+    curl -sSLf -o helm.tar.gz "https://get.helm.sh/helm-v${HELM_VERSION}-linux-${ARCH}.tar.gz" && \
+    curl -sSLfO "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" && \
     tar xfz ct.tar.gz -C /tmp && \
     tar xfz cr.tar.gz -C /tmp && \
     tar xfz helm.tar.gz -C /tmp && \
@@ -126,13 +126,13 @@ RUN \
     sed -i 's/# %wheel/%wheel/g' /etc/sudoers && \
   echo "**** Add buildx and set as default ****" && \
     mkdir -p /buildkite/.docker/cli-plugins && \
-    curl -sSfL -o /buildkite/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64" && \
+    curl -sSfL -o /buildkite/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-amd64" && \
     chmod +x /buildkite/.docker/cli-plugins/docker-buildx && \
     docker buildx install && \
     docker buildx create --name buildx && \
   echo "**** Install Linting tools ****" && \
-    curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin ${GOLANGCILINT_VERSION} && \
-    curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin ${REVIEWDOG_VERSION} && \
+    curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin v${GOLANGCILINT_VERSION} && \
+    curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION} && \
     pnpm add --global eslint markdownlint-cli && \
   echo "**** Install Coverage tools ****" && \
     curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov" && \
