@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **30/03/2022:** Revert buildx to v0.7.1.
 - **28/03/2022:** Update chart-releaser (v1.4.0).
 - **25/03/2022:** Update golangci-lint (v1.45.2).
 - **25/03/2022:** Update buildkite agent (v3.35.0).
