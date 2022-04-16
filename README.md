@@ -102,7 +102,8 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
-- **16/04/2022:** Update reviewdog (v0.14.1-beta1, forked).
+- **16/04/2022:** Update buildkite agent (v3.35.2)
+- **16/04/2022:** Update reviewdog (v0.14.1-beta1, forked)
 - **06/04/2022:** Update buildkite agent (v3.35.1)
 - **30/03/2022:** Revert buildx to v0.7.1.
 - **28/03/2022:** Update chart-releaser (v1.4.0).
