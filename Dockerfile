@@ -133,7 +133,7 @@ RUN \
   echo "**** Install Linting tools ****" && \
     curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin v${GOLANGCILINT_VERSION} && \
     # curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION} && \
-    curl -sSfL -o /bin/reviewdog "https://github.com/james-d-elliott/reviewdog/releases/download/v0.14.1-beta1/reviewdog_linux_amd64" && chmod +x /bin/reviewdog && \
+    curl -sSfL -o /bin/reviewdog "https://github.com/james-d-elliott/reviewdog/releases/download/v0.14.1-beta2/reviewdog_linux_amd64" && chmod +x /bin/reviewdog && \
     pnpm add --global eslint markdownlint-cli && \
   echo "**** Install Coverage tools ****" && \
     curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov" && \
