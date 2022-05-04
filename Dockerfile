@@ -11,7 +11,7 @@ ARG BUILDX_VERSION="0.7.1"
 ARG CC_VERSION="15"
 ARG OVERLAY_VERSION="2.2.0.3"
 ARG GOLANGCILINT_VERSION="1.45.2"
-ARG REVIEWDOG_VERSION="0.14.0"
+ARG REVIEWDOG_VERSION="0.14.1"
 ARG CT_VERSION="3.5.1"
 ARG CR_VERSION="1.4.0"
 ARG HELM_VERSION="3.8.1"
@@ -132,8 +132,7 @@ RUN \
     docker buildx create --name buildx && \
   echo "**** Install Linting tools ****" && \
     curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin v${GOLANGCILINT_VERSION} && \
-    # curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION} && \
-    curl -sSfL -o /bin/reviewdog "https://github.com/james-d-elliott/reviewdog/releases/download/v0.14.1-beta2/reviewdog_linux_amd64" && chmod +x /bin/reviewdog && \
+    curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION} && \
     pnpm add --global eslint markdownlint-cli && \
   echo "**** Install Coverage tools ****" && \
     curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov" && \
