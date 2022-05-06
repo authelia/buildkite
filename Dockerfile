@@ -133,13 +133,13 @@ RUN \
   echo "**** Install Linting tools ****" && \
     curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin v${GOLANGCILINT_VERSION} && \
     curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION} && \
-    pnpm add --global --global-bin-dir="/usr/bin" eslint markdownlint-cli && \
+    npm add --global eslint markdownlint-cli && \
   echo "**** Install Coverage tools ****" && \
     curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov" && \
     chmod +x /usr/local/bin/codecov && \
-    pnpm add --global --global-bin-dir="/usr/bin" nyc && \
+    npm add --global nyc && \
   echo "**** Install Release tools ****" && \
-    pnpm add --global --global-bin-dir="/usr/bin" conventional-changelog-cli && \
+    npm add --global conventional-changelog-cli && \
   echo "**** Cleanup ****" && \
     rm -rf /tmp/* /buildkite/.pnpm-store
 
