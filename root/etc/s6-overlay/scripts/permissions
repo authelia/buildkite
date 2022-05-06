@@ -1,0 +1,5 @@
+#!/command/with-contenv bash
+
+# permissions
+chown --from=root:root -R buildkite:buildkite \
+	/buildkite
