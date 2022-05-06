@@ -22,12 +22,16 @@ ARG KUBECTL_VERSION="1.23.5"
 ENV PATH="$PATH:/buildkite/.go/bin" \
 PS1="$(whoami)@$(hostname):$(pwd)$ " \
 HOME="/buildkite" \
+S6_CMD_WAIT_FOR_SERVICES_MAXTIME="0"
 TERM="xterm"
 
 # set runtime variables
 ENV BUILDKITE_AGENT_CONFIG="/buildkite/buildkite-agent.cfg" \
 BUNDLE_PATH="/buildkite/.gem" \
 GOPATH="/buildkite/.go"
+
+# add local files
+COPY root/ /
 
 # add packages required to install others
 RUN \
@@ -142,9 +146,6 @@ RUN \
     npm add --global conventional-changelog-cli && \
   echo "**** Cleanup ****" && \
     rm -rf /tmp/* /buildkite/.pnpm-store
-
-# add local files
-COPY root/ /
 
 # ports and volumes
 VOLUME /buildkite
