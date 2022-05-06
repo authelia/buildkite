@@ -22,7 +22,7 @@ ARG KUBECTL_VERSION="1.23.5"
 ENV PATH="$PATH:/buildkite/.go/bin" \
 PS1="$(whoami)@$(hostname):$(pwd)$ " \
 HOME="/buildkite" \
-S6_CMD_WAIT_FOR_SERVICES_MAXTIME="0"
+S6_CMD_WAIT_FOR_SERVICES_MAXTIME="0" \
 TERM="xterm"
 
 # set runtime variables
