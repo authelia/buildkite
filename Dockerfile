@@ -29,9 +29,6 @@ ENV BUILDKITE_AGENT_CONFIG="/buildkite/buildkite-agent.cfg" \
 BUNDLE_PATH="/buildkite/.gem" \
 GOPATH="/buildkite/.go"
 
-# add local files
-COPY root/ /
-
 # add packages required to install others
 RUN \
   echo "**** Install Essential Packages ****" && \
@@ -145,6 +142,9 @@ RUN \
     npm add --global conventional-changelog-cli && \
   echo "**** Cleanup ****" && \
     rm -rf /tmp/* /buildkite/.pnpm-store
+
+# add local files
+COPY root/ /
 
 # ports and volumes
 VOLUME /buildkite
