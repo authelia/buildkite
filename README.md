@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **06/05/2022:** Update s6-overlay to v3.1.0.1.
 - **06/05/2022:** Add node tooling via npm instead of pnpm
 - **04/05/2022:** Update reviewdog v0.14.1
 - **16/04/2022:** Update reviewdog (v0.14.1-beta2, forked)

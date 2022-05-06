@@ -1,0 +1,4 @@
+#!/command/with-contenv bash
+
+exec \
+	  s6-setuidgid root dockerd > /dev/null 2>&1

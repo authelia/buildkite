@@ -5,11 +5,12 @@ LABEL maintainer="Nightah"
 
 # set application versions
 ARG ARCH="amd64"
+ARG ARCH_ALT="x86_64"
 ARG BUILDKITE_VERSION="3.35.2"
 ARG PNPM_VERSION="6.16"
 ARG BUILDX_VERSION="0.7.1"
 ARG CC_VERSION="15"
-ARG OVERLAY_VERSION="2.2.0.3"
+ARG OVERLAY_VERSION="3.1.0.1"
 ARG GOLANGCILINT_VERSION="1.45.2"
 ARG REVIEWDOG_VERSION="0.14.1"
 ARG CT_VERSION="3.5.1"
@@ -101,8 +102,10 @@ RUN \
     curl -f https://get.pnpm.io/v${PNPM_VERSION}.js | node - add --global pnpm && \
     pnpm config set --global store-dir ~/.pnpm-store && \
   echo "**** Add s6 overlay ****" && \
-    curl -sSfL -o s6-overlay.tar.gz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH}.tar.gz" && \
-    tar xfz s6-overlay.tar.gz -C / && \
+    curl -sSfL -o s6-overlay-noarch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-noarch.tar.xz" && \
+    curl -sSfL -o s6-overlay.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH_ALT}.tar.xz" && \
+    tar -C / -Jpxf s6-overlay-noarch.tar.xz && \
+    tar -C / -Jpxf s6-overlay.tar.xz && \
   echo "**** Add musl cross-compilers ****" && \
     curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/v${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
     curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/v${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \

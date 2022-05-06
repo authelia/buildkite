@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/command/with-contenv bash
 
 PUID=${PUID:-911}
 PGID=${PGID:-911}
@@ -26,4 +26,4 @@ User uid:    $(id -u buildkite)
 User gid:    $(id -g buildkite)
 --------------------------------------------
 "
-chown buildkite:buildkite /buildkite
+chown -R buildkite:buildkite /buildkite
