@@ -102,6 +102,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **30/06/2022:** Update s6-overlay to v3.1.1.2.
 - **21/06/2022:** Update s6-overlay to v3.1.1.0.
 - **06/04/2022:** Update buildkite agent (v3.36.1), golangci-lint (v1.46.2)
 - **06/05/2022:** Update s6-overlay to v3.1.0.1.
