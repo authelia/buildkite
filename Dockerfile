@@ -7,16 +7,16 @@ LABEL maintainer="Nightah"
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
 ARG BUILDKITE_VERSION="3.38.0"
-ARG PNPM_VERSION="6.16"
+ARG PNPM_VERSION="7.9.0"
 ARG BUILDX_VERSION="0.7.1"
 ARG CC_VERSION="15"
 ARG OVERLAY_VERSION="3.1.1.2"
-ARG GOLANGCILINT_VERSION="1.47.2"
+ARG GOLANGCILINT_VERSION="1.48.0"
 ARG REVIEWDOG_VERSION="0.14.1"
-ARG CT_VERSION="3.5.1"
+ARG CT_VERSION="3.7.0"
 ARG CR_VERSION="1.4.0"
-ARG HELM_VERSION="3.8.1"
-ARG KUBECTL_VERSION="1.23.5"
+ARG HELM_VERSION="3.9.2"
+ARG KUBECTL_VERSION="1.24.3"
 
 # environment variables
 ENV PATH="$PATH:/buildkite/.go/bin" \
@@ -100,7 +100,7 @@ RUN \
   echo "**** Add Python Packages ****" && \
     pip install yamllint yamale && \
   echo "**** Add pnpm ****" && \
-    curl -f https://get.pnpm.io/v${PNPM_VERSION}.js | node - add --global pnpm && \
+    npm add --global pnpm@${PNPM_VERSION} && \
     pnpm config set --global store-dir ~/.pnpm-store && \
   echo "**** Add s6 overlay ****" && \
     curl -sSfL -o s6-overlay-noarch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-noarch.tar.xz" && \
