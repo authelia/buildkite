@@ -125,15 +125,15 @@ RUN \
   echo "**** Patch CVE-2019-5021 ****" && \
     sed -i -e 's/^root::/root:!:/' /etc/shadow && \
   echo "**** Create buildkite user and make our folders ****" && \
+    groupadd -g 977 docker && \
     useradd -u 911 -U -d /buildkite -s /bin/false buildkite && \
-    usermod -G wheel buildkite && \
+    usermod -aG docker,wheel buildkite && \
     sed -i 's/# %wheel/%wheel/g' /etc/sudoers && \
-  echo "**** Add buildx and set as default ****" && \
+  echo "**** Add buildx ****" && \
     mkdir -p /buildkite/.docker/cli-plugins && \
     curl -sSfL -o /buildkite/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-amd64" && \
     chmod +x /buildkite/.docker/cli-plugins/docker-buildx && \
     docker buildx install && \
-    docker buildx create --driver-opt image=moby/buildkit:master --name buildx && \
   echo "**** Install Linting tools ****" && \
     curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin v${GOLANGCILINT_VERSION} && \
     curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION} && \
