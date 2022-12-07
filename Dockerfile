@@ -101,7 +101,6 @@ RUN \
     pip install yamllint yamale && \
   echo "**** Add pnpm ****" && \
     npm add --global pnpm@${PNPM_VERSION} && \
-    pnpm config set --global store-dir ~/.pnpm-store && \
   echo "**** Add s6 overlay ****" && \
     curl -sSfL -o s6-overlay-noarch.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-noarch.tar.xz" && \
     curl -sSfL -o s6-overlay.tar.xz "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${ARCH_ALT}.tar.xz" && \

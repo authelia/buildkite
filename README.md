@@ -32,8 +32,8 @@ docker create \
   -v <path to data>/ssh:/buildkite/.ssh \
   -v <path to data>/bundle:/buildkite/.bundle \
   -v <path to data>/cache:/buildkite/.cache \
-  -v <path to data>/gem:/buildkite/.gem \
   -v <path to data>/go:/buildkite/.go \
+  -v <path to data>/pnpm-store:/buildkite/.local/share/pnpm/store \
   -v <path to data>/hooks:/buildkite/hooks \
   --restart unless-stopped \
   --privileged \
@@ -55,8 +55,8 @@ services:
       - <path to data>/ssh:/buildkite/.ssh \
       - <path to data>/bundle:/buildkite/.bundle \
       - <path to data>/cache:/buildkite/.cache \
-      - <path to data>/gem:/buildkite/.gem \
       - <path to data>/go:/buildkite/.go \
+      - <path to data>/pnpm-store:/buildkite/.local/share/pnpm/store \
       - <path to data>/hooks:/buildkite/hooks
     restart: unless-stopped
     environment:
@@ -82,10 +82,9 @@ Container images are configured using parameters passed at runtime (such as thos
 |                  `-e PGID=1000`                   | for GroupID - see below for explanation                                                                                                                                                                                                                          |
 |            `-e TZ=Australia/Melbourne`            | for setting timezone information, eg Australia/Melbourne                                                                                                                                                                                                         |
 |               `-v /buildkite/.ssh`                | SSH `id_rsa` and `ida_rsa.pub` stored here for [GitHub cloning](https://buildkite.com/docs/agent/v3/ssh-keys)                                                                                                                                                    |
-|              `-v /buildkite/.bundle`              | $BUNDLE_PATH, set this location to share cache between multiple node containers                                                                                                                                                                                  |
-|              `-v /buildkite/.cache`               | $YARN_CACHE_FOLDER, set this location to share cache between multiple node containers                                                                                                                                                                            |
-|               `-v /buildkite/.gem`                | $GEM_HOME, set this location to share cache between multiple node containers                                                                                                                                                                                     |
+|              `-v /buildkite/.cache`               | set this location to share cache for go-build and golangci-lint between multiple node containers                                                                                                                                                                 |
 |                `-v /buildkite/.go`                | $GOPATH, set this location to share cache between multiple node containers                                                                                                                                                                                       |
+|      `-v /buildkite/.local/share/pnpm/store`      | set this location to share pnpm cache between multiple node containers                                                                                                                                                                                           |
 |               `-v /buildkite/hooks`               | Directory used to provide [agent based hooks](https://buildkite.com/docs/agent/v3/hooks) `/buildkite/hooks/environment` is used to provide secrets in to Buildkite such as `DOCKER_USERNAME` `DOCKER_PASSWORD` and `GITHUB_TOKEN` for publish and clean up steps |
 
 ## User / Group Identifiers
@@ -102,6 +101,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **07/12/2022:** Fix pnpm store path
 - **09/09/2022:** Update buildx (v0.9.1), s6-overlay (v3.1.2.1), golangci-lint (v1.49.0), kubectl (v1.25.0)
 - **12/08/2022:** Update to master tag of buildkit
 - **07/08/2022:** Update pnpm (v7.9.0), golangci-lint (v1.48.0), ct (v3.7.0), helm (v3.9.2), kubectl (v1.24.3)
