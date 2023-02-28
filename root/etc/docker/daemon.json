@@ -1,5 +1,12 @@
 {
   "default-runtime": "crun",
+  "default-ulimits": {
+    "nofile": {
+      "Name": "nofile",
+      "Hard": 10240,
+      "Soft": 1024
+    }
+  },
   "runtimes": {
     "crun": {
       "path": "/usr/bin/crun"
