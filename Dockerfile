@@ -83,6 +83,7 @@ RUN \
       perl \
       py3-pip \
       py3-wheel \
+      yamllint \
       python3 \
       rsync \
       ruby-bigdecimal \
@@ -98,7 +99,7 @@ RUN \
 RUN \
   cd /tmp && \
   echo "**** Add Python Packages ****" && \
-    pip install yamllint yamale && \
+    pip install yamale --break-system-packages && \
   echo "**** Add pnpm ****" && \
     npm add --global pnpm@${PNPM_VERSION} && \
   echo "**** Add s6 overlay ****" && \
