@@ -112,12 +112,16 @@ RUN \
     curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/v${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \
   echo "**** Add k8s/helm tools ****" && \
     curl -SsLf -o ct.tar.gz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_${ARCH}.tar.gz" && \
-    curl -SsLf -o cr.tar.gz "https://github.com/helm/chart-releaser/releases/download/v${CR_VERSION}/chart-releaser_${CR_VERSION}_linux_${ARCH}.tar.gz" && \
+    curl -SsLf -o cr.tar.gz "https://github.com/authelia/chart-releaser/archive/refs/tags/v${CR_VERSION}.tar.gz" && \
     curl -sSLf -o helm.tar.gz "https://get.helm.sh/helm-v${HELM_VERSION}-linux-${ARCH}.tar.gz" && \
     curl -sSLfO "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" && \
     tar xfz ct.tar.gz -C /tmp && \
     tar xfz cr.tar.gz -C /tmp && \
     tar xfz helm.tar.gz -C /tmp && \
+    cd chart-releaser-${CR_VERSION} && \
+    go mod download && \
+    go build -o /tmp/cr ./cr && \
+    cd /tmp && \
     chmod +x ct cr linux-${ARCH}/helm kubectl && \
     mv -t /usr/local/bin/ ct cr linux-${ARCH}/helm kubectl && \
     mkdir /etc/ct && \
