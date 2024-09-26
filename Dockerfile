@@ -9,7 +9,8 @@ ARG ARCH_ALT="x86_64"
 ARG BUILDKITE_VERSION="3.82.1"
 ARG PNPM_VERSION="9.11.0"
 ARG BUILDX_VERSION="0.17.1"
-ARG CC_VERSION="15"
+ARG CC_TRIPLES="aarch64-unknown-linux-musl,arm-unknown-linux-musleabihf"
+ARG CC_VERSION="20240923"
 ARG OVERLAY_VERSION="3.2.0.0"
 ARG GOLANGCILINT_VERSION="1.61.0"
 ARG REVIEWDOG_VERSION="0.20.2"
@@ -108,8 +109,12 @@ RUN \
     tar -C / -Jpxf s6-overlay-noarch.tar.xz && \
     tar -C / -Jpxf s6-overlay.tar.xz && \
   echo "**** Add musl cross-compilers ****" && \
-    curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/v${CC_VERSION}/gcc-9.2.0-arm-linux-musleabihf.tar.xz" | tar -xJ --directory / && \
-    curl -sSfL "https://github.com/just-containers/musl-cross-make/releases/download/v${CC_VERSION}/gcc-9.2.0-aarch64-linux-musl.tar.xz" | tar -xJ --directory / && \
+    for triple in $(echo ${CC_TRIPLES} | tr "," " "); do \
+      curl -sSfL "https://github.com/musl-cross/musl-cross/releases/download/${CC_VERSION}/${triple}.tgz" | tar -xz -C /; \
+      for bin in /${triple}/bin/*; do \
+        ln -s "${bin}" "/bin/$(basename ${bin//-unknown})"; \
+      done; \
+    done && \
   echo "**** Add k8s/helm tools ****" && \
     curl -SsLf -o ct.tar.gz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_${ARCH}.tar.gz" && \
     curl -SsLf -o cr.tar.gz "https://github.com/authelia/chart-releaser/archive/refs/tags/v${CR_VERSION}.tar.gz" && \
