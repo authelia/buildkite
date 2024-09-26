@@ -6,17 +6,17 @@ LABEL maintainer="Nightah"
 # set application versions
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.81.0"
-ARG PNPM_VERSION="9.10.0"
+ARG BUILDKITE_VERSION="3.82.1"
+ARG PNPM_VERSION="9.11.0"
 ARG BUILDX_VERSION="0.17.1"
 ARG CC_VERSION="15"
-ARG OVERLAY_VERSION="3.1.6.2"
+ARG OVERLAY_VERSION="3.2.0.0"
 ARG GOLANGCILINT_VERSION="1.61.0"
-ARG REVIEWDOG_VERSION="0.20.1"
+ARG REVIEWDOG_VERSION="0.20.2"
 ARG CT_VERSION="3.11.0"
 ARG CR_VERSION="1.6.1"
 ARG HELM_VERSION="3.16.1"
-ARG KUBECTL_VERSION="1.31.0"
+ARG KUBECTL_VERSION="1.31.1"
 
 # environment variables
 ENV PATH="$PATH:/buildkite/.go/bin" \
@@ -57,14 +57,14 @@ RUN \
 # modifications
 RUN \
   echo "**** Install Authelia CI pre-requisites ****" && \
+    echo "@3.19 http://dl-cdn.alpinelinux.org/alpine/v3.19/community" >> /etc/apk/repositories && \
     echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     echo "@edget http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk add --no-cache \
       bash \
       ca-certificates \
       coreutils \
-      chromium \
-      chromium-chromedriver \
+      chromium@3.19 \
       crun \
       docker-compose \
       findutils \
@@ -114,7 +114,7 @@ RUN \
     curl -SsLf -o ct.tar.gz "https://github.com/helm/chart-testing/releases/download/v${CT_VERSION}/chart-testing_${CT_VERSION}_linux_${ARCH}.tar.gz" && \
     curl -SsLf -o cr.tar.gz "https://github.com/authelia/chart-releaser/archive/refs/tags/v${CR_VERSION}.tar.gz" && \
     curl -sSLf -o helm.tar.gz "https://get.helm.sh/helm-v${HELM_VERSION}-linux-${ARCH}.tar.gz" && \
-    curl -sSLfO "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" && \
+    curl -sSLfO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" && \
     tar xfz ct.tar.gz -C /tmp && \
     tar xfz cr.tar.gz -C /tmp && \
     tar xfz helm.tar.gz -C /tmp && \
