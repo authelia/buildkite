@@ -101,6 +101,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **10/10/2024:** Update buildkite agent (v3.83.1), pnpm (v9.12.1)
 - **01/10/2024:** Update dockerd service to ensure cgroups are handled appropriately and clean up service dependencies
 - **26/09/2024:** Swap musl cross-compilers to musl-cross/musl-cross
 - **26/09/2024:** Update buildkite agent (v3.82.1), pnpm (v9.11.0), s6 (v3.2.0.0), reviewdog (v0.20.2), kubectl (v1.31.1), remove chromedriver and pin chromium to alpine 3.19
