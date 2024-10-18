@@ -1,6 +1,8 @@
 #!/command/with-contenv bash
 
-if docker buildx ls | grep -L buildx; then
+until curl -s --unix-socket /var/run/docker.sock http/_ping 2>&1 >/dev/null; do sleep 1; done
+
+if ! docker buildx ls | grep -q buildx; then
   docker buildx create --driver-opt image=moby/buildkit:master --name buildx --use && \
   docker buildx inspect --bootstrap && \
   chown -R buildkite:buildkite /buildkite/.docker

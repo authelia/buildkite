@@ -101,6 +101,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **19/10/2024:** Fix buildx setup and container permissions
 - **10/10/2024:** Update buildkite agent (v3.83.1), pnpm (v9.12.1)
 - **01/10/2024:** Update dockerd service to ensure cgroups are handled appropriately and clean up service dependencies
 - **26/09/2024:** Swap musl cross-compilers to musl-cross/musl-cross

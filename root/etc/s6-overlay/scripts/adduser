@@ -26,4 +26,4 @@ User uid:    $(id -u buildkite)
 User gid:    $(id -g buildkite)
 --------------------------------------------
 "
-chown buildkite:buildkite /buildkite
+chown -R buildkite:buildkite /buildkite
