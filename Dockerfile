@@ -6,18 +6,18 @@ LABEL maintainer="Nightah"
 # set application versions
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.83.1"
-ARG PNPM_VERSION="9.12.1"
-ARG BUILDX_VERSION="0.17.1"
+ARG BUILDKITE_VERSION="3.87.1"
+ARG PNPM_VERSION="9.14.4"
+ARG BUILDX_VERSION="0.19.1"
 ARG CC_TRIPLES="aarch64-unknown-linux-musl,arm-unknown-linux-musleabihf"
-ARG CC_VERSION="20240923"
-ARG OVERLAY_VERSION="3.2.0.0"
-ARG GOLANGCILINT_VERSION="1.61.0"
+ARG CC_VERSION="20241103"
+ARG OVERLAY_VERSION="3.2.0.2"
+ARG GOLANGCILINT_VERSION="1.62.2"
 ARG REVIEWDOG_VERSION="0.20.2"
 ARG CT_VERSION="3.11.0"
 ARG CR_VERSION="1.6.1"
-ARG HELM_VERSION="3.16.1"
-ARG KUBECTL_VERSION="1.31.1"
+ARG HELM_VERSION="3.16.3"
+ARG KUBECTL_VERSION="1.31.3"
 
 # environment variables
 ENV PATH="$PATH:/buildkite/.go/bin" \
@@ -110,7 +110,7 @@ RUN \
     tar -C / -Jpxf s6-overlay.tar.xz && \
   echo "**** Add musl cross-compilers ****" && \
     for triple in $(echo ${CC_TRIPLES} | tr "," " "); do \
-      curl -sSfL "https://github.com/musl-cross/musl-cross/releases/download/${CC_VERSION}/${triple}.tgz" | tar -xz -C /; \
+      curl -sSfL "https://github.com/musl-cross/musl-cross/releases/download/${CC_VERSION}/${triple}.tar.xz" | tar -C / -xJ; \
       for bin in /${triple}/bin/*; do \
         ln -s "${bin}" "/bin/$(basename ${bin//-unknown})"; \
       done; \
