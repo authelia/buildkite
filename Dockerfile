@@ -6,8 +6,8 @@ LABEL maintainer="Nightah"
 # set application versions
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.90.0"
-ARG PNPM_VERSION="9.15.4"
+ARG BUILDKITE_VERSION="3.91.0"
+ARG PNPM_VERSION="10.2.1"
 ARG BUILDX_VERSION="0.20.1"
 ARG CC_TRIPLES="aarch64-unknown-linux-musl,arm-unknown-linux-musleabihf"
 ARG CC_VERSION="20241103"
@@ -129,7 +129,7 @@ RUN \
     cd /tmp && \
     chmod +x ct cr linux-${ARCH}/helm kubectl && \
     mv -t /usr/local/bin/ ct cr linux-${ARCH}/helm kubectl && \
-    mkdir /etc/ct && \
+    mkdir -p /etc/ct && \
     mv -t /etc/ct/ etc/chart_schema.yaml etc/lintconf.yaml && \
   echo "**** Patch CVE-2019-5021 ****" && \
     sed -i -e 's/^root::/root:!:/' /etc/shadow && \
