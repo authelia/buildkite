@@ -6,18 +6,18 @@ LABEL maintainer="Nightah"
 # set application versions
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.97.0"
-ARG PNPM_VERSION="10.10.0"
-ARG BUILDX_VERSION="0.23.0"
+ARG BUILDKITE_VERSION="3.100.1"
+ARG PNPM_VERSION="10.12.4"
+ARG BUILDX_VERSION="0.25.0"
 ARG CC_TRIPLES="aarch64-unknown-linux-musl,arm-unknown-linux-musleabihf"
 ARG CC_VERSION="20250206"
-ARG OVERLAY_VERSION="3.2.0.2"
-ARG GOLANGCILINT_VERSION="1.64.6"
+ARG OVERLAY_VERSION="3.2.1.0"
+ARG GOLANGCILINT_VERSION="2.2.1"
 ARG REVIEWDOG_VERSION="0.20.3"
-ARG CT_VERSION="3.12.0"
+ARG CT_VERSION="3.13.0"
 ARG CR_VERSION="1.6.1"
-ARG HELM_VERSION="3.17.3"
-ARG KUBECTL_VERSION="1.33.0"
+ARG HELM_VERSION="3.18.3"
+ARG KUBECTL_VERSION="1.33.2"
 
 # environment variables
 ENV PATH="$PATH:/buildkite/.go/bin" \
@@ -58,14 +58,13 @@ RUN \
 # modifications
 RUN \
   echo "**** Install Authelia CI pre-requisites ****" && \
-    echo "@3.19 http://dl-cdn.alpinelinux.org/alpine/v3.19/community" >> /etc/apk/repositories && \
     echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     echo "@edget http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk add --no-cache \
       bash \
       ca-certificates \
       coreutils \
-      chromium@3.19 \
+      chromium \
       crun \
       docker-compose \
       findutils \
@@ -87,10 +86,6 @@ RUN \
       yamllint \
       python3 \
       rsync \
-      ruby-bigdecimal \
-      ruby-bundler \
-      ruby-dev \
-      ruby-json \
       shadow \
       sudo \
       tzdata \
@@ -110,7 +105,7 @@ RUN \
     tar -C / -Jpxf s6-overlay.tar.xz && \
   echo "**** Add musl cross-compilers ****" && \
     for triple in $(echo ${CC_TRIPLES} | tr "," " "); do \
-      curl -sSfL "https://github.com/musl-cross/musl-cross/releases/download/${CC_VERSION}/${triple}.tar.xz" | tar -C / -xJ; \
+      curl -sSfL "https://github.com/cross-tools/musl-cross/releases/download/${CC_VERSION}/${triple}.tar.xz" | tar -C / -xJ; \
       for bin in /${triple}/bin/*; do \
         ln -s "${bin}" "/bin/$(basename ${bin//-unknown})"; \
       done; \
