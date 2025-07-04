@@ -6,7 +6,7 @@ LABEL maintainer="Nightah"
 # set application versions
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.100.1"
+ARG BUILDKITE_VERSION="3.101.0"
 ARG PNPM_VERSION="10.12.4"
 ARG BUILDX_VERSION="0.25.0"
 ARG CC_TRIPLES="aarch64-unknown-linux-musl,arm-unknown-linux-musleabihf"

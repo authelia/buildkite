@@ -21,8 +21,7 @@ cat <<'EOF'
 GID/UID
 --------------------------------------------
 EOF
-echo "
-User uid:    $(id -u buildkite)
+echo "User uid:    $(id -u buildkite)
 User gid:    $(id -g buildkite)
 --------------------------------------------
 "

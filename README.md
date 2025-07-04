@@ -101,6 +101,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **04/07/2025:** Update buildkite agent(v3.101.0)
 - **02/07/2025:** Update buildkite agent(v3.100.1), pnpm (v10.12.4), buildx (v0.25.0), musl-cross (20250520), s6-overlay (v3.2.1.0), golangci-lint (v2.2.1), chart-testing (v3.13.0), helm (v3.18.3), kubectl (v1.33.2) 
 - **04/05/2025:** Update buildkite agent(v3.97.0), pnpm (v10.10.0), buildx (v0.23.0), helm (v3.17.3), kubectl (v1.33.0)
 - **11/03/2025:** Update buildkite agent(v3.93.1), pnpm (v10.6.2), buildx (v0.21.2), golangci-lint (v1.64.6)
