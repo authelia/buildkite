@@ -6,13 +6,14 @@ LABEL maintainer="Nightah"
 # set application versions
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.102.0"
+ARG BUILDKITE_VERSION="3.103.0"
 ARG PNPM_VERSION="10.13.1"
-ARG BUILDX_VERSION="0.25.0"
+ARG BUILDX_VERSION="0.26.1"
 ARG CC_TRIPLES="aarch64-unknown-linux-musl,arm-unknown-linux-musleabihf"
 ARG CC_VERSION="20250206"
 ARG OVERLAY_VERSION="3.2.1.0"
-ARG GOLANGCILINT_VERSION="2.2.2"
+ARG GOLANGCILINT_VERSION="2.3.0"
+ARG GITLEAKS_VERSION="8.28.0"
 ARG REVIEWDOG_VERSION="0.20.3"
 ARG CT_VERSION="3.13.0"
 # Authelia fork
@@ -141,6 +142,8 @@ RUN \
   echo "**** Install Linting tools ****" && \
     curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin v${GOLANGCILINT_VERSION} && \
     curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION} && \
+    curl -sSfL -o gitleaks.tar.gz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" && \
+    tar xfz gitleaks.tar.gz -C /usr/local/bin/ gitleaks && \
     npm add --global eslint@8.57.0 markdownlint-cli && \
   echo "**** Install Coverage tools ****" && \
     curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov" && \
@@ -149,6 +152,7 @@ RUN \
   echo "**** Install Release tools ****" && \
     npm add --global conventional-changelog-cli && \
   echo "**** Cleanup ****" && \
+    find /usr/local/bin/ -not -user root -exec chown root:root {} + && \
     rm -rf /tmp/* /buildkite/.pnpm-store
 
 # ports and volumes
