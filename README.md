@@ -10,7 +10,7 @@ This custom image is based on the `docker:dind` to provide docker-in-docker alon
 The image will be re-built if any updates are made to the base `docker:dind` image.
 
 This image shamelessly utilises the fine work by the team over at [LinuxServer.io](https://www.linuxserver.io/), credits to their [alpine baseimage](https://github.com/linuxserver/docker-baseimage-alpine/).
-  
+
 ## Usage
 
 Here are some example snippets to help you get started creating a container.
@@ -30,7 +30,6 @@ docker create \
   -e PGID=1000 \
   -e TZ=Australia/Melbourne \
   -v <path to data>/ssh:/buildkite/.ssh \
-  -v <path to data>/bundle:/buildkite/.bundle \
   -v <path to data>/cache:/buildkite/.cache \
   -v <path to data>/go:/buildkite/.go \
   -v <path to data>/pnpm-store:/buildkite/.local/share/pnpm/store \
@@ -53,7 +52,6 @@ services:
     privileged: true
     volumes:
       - <path to data>/ssh:/buildkite/.ssh \
-      - <path to data>/bundle:/buildkite/.bundle \
       - <path to data>/cache:/buildkite/.cache \
       - <path to data>/go:/buildkite/.go \
       - <path to data>/pnpm-store:/buildkite/.local/share/pnpm/store \
@@ -101,14 +99,15 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
-- **26/08/2025:** Revert helm to v3.18.4.
+- **26/08/2025:** Add .editorconfig and update Dockerfile to use RUN Heredoc syntax
+- **26/08/2025:** Revert helm to v3.18.4
 - **26/08/2025:** Pull authelia/crossbuild container in dockersetup script
 - **26/08/2025:** Update pnpm (v10.15.0), buildx (v0.27.0), helm (v3.18.6) and remove eslint, musl-cc
 - **15/08/2025:** Update buildkite agent(v3.103.1), golangci-lint (v2.4.0), pnpm (v10.14.0), helm (v3.18.5), kubectl (v1.33.4)
 - **24/07/2025:** Update buildkite agent(v3.103.0), buildx (v0.26.1), golangci-lint (v2.3.0) and add gitleaks (v8.28.0)
 - **12/07/2025:** Update buildkite agent(v3.102.0), pnpm (v10.13.1), golangci-lint (v2.2.2), helm (v3.18.4)
 - **04/07/2025:** Update buildkite agent(v3.101.0)
-- **02/07/2025:** Update buildkite agent(v3.100.1), pnpm (v10.12.4), buildx (v0.25.0), musl-cross (20250520), s6-overlay (v3.2.1.0), golangci-lint (v2.2.1), chart-testing (v3.13.0), helm (v3.18.3), kubectl (v1.33.2) 
+- **02/07/2025:** Update buildkite agent(v3.100.1), pnpm (v10.12.4), buildx (v0.25.0), musl-cross (20250520), s6-overlay (v3.2.1.0), golangci-lint (v2.2.1), chart-testing (v3.13.0), helm (v3.18.3), kubectl (v1.33.2)
 - **04/05/2025:** Update buildkite agent(v3.97.0), pnpm (v10.10.0), buildx (v0.23.0), helm (v3.17.3), kubectl (v1.33.0)
 - **11/03/2025:** Update buildkite agent(v3.93.1), pnpm (v10.6.2), buildx (v0.21.2), golangci-lint (v1.64.6)
 - **17/02/2025:** Update pnpm (v10.4.1), musl-cross (20250206)
@@ -177,7 +176,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 - **25/03/2022:** Update buildkite agent (v3.35.0).
 - **24/03/2022:** Update golangci-lint (v1.45.1).
 - **24/03/2022:** Update golangci-lint (v1.45.0).
-- **18/03/2022:** Update buildkite agent (v3.34.1), pnpm (v6.32.3), buildx (v0.8.0), golangci-lint (v1.44.2), 
+- **18/03/2022:** Update buildkite agent (v3.34.1), pnpm (v6.32.3), buildx (v0.8.0), golangci-lint (v1.44.2),
   reviewdog (v0.14.0), chart-testing (v3.5.1), helm (v3.8.1), kubectl (v1.23.5).
 - **01/02/2022:** Revert s6-overlay to v2.2.0.3.
 - **01/02/2022:** Bump s6-overlay to v3.0.0.2.
@@ -206,7 +205,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 - **28/06/2021:** Update reviewdog to v0.12.0
 - **21/06/2021:** Update golangci-lint to v1.41.1, helm to v3.6.1, and kubectl to v1.21.2
 - **17/06/2021:** Update golangci-lint to v1.41.0
-- **01/06/2021:** Update buildkite-agent to v3.30.0, helm to v3.6.0, kubectl to v1.21.1, chart-testing to v3.4.0, and 
+- **01/06/2021:** Update buildkite-agent to v3.30.0, helm to v3.6.0, kubectl to v1.21.1, chart-testing to v3.4.0, and
   chart-releaser to v1.2.1
 - **27/04/2021:** Remove crun OCI runtime
 - **27/04/2021:** Change entrypoint to dockerd to prevent TLS cert generation issue
