@@ -9,3 +9,4 @@ if ! docker buildx ls | grep -q buildx; then
 fi
 
 s6-setuidgid buildkite docker buildx use default
+s6-setuidgid buildkite docker pull authelia/crossbuild
