@@ -4,13 +4,12 @@ LABEL org.opencontainers.image.authors="Authelia Team <team@authelia.com>"
 
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.103.1"
-ARG PNPM_VERSION="10.15.0"
-ARG BUILDX_VERSION="0.27.0"
+ARG BUILDKITE_VERSION="3.104.0"
+ARG PNPM_VERSION="10.15.1"
+ARG BUILDX_VERSION="0.28.0"
 ARG OVERLAY_VERSION="3.2.1.0"
 ARG GOLANGCILINT_VERSION="2.4.0"
-ARG GITLEAKS_VERSION="8.28.0"
-ARG REVIEWDOG_VERSION="0.20.3"
+ARG REVIEWDOG_VERSION="0.21.0"
 ARG CT_VERSION="3.13.0"
 # Authelia fork
 ARG CR_VERSION="1.6.1"
@@ -54,6 +53,7 @@ RUN <<EOF
     echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
     echo "@edget http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 	apk add --no-cache \
+		apt \
 		bash \
 		ca-certificates \
 		coreutils \
@@ -127,8 +127,6 @@ RUN <<EOF
 	echo "**** Install Linting tools ****"
 	curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin v${GOLANGCILINT_VERSION}
 	curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION}
-	curl -sSfL -o gitleaks.tar.gz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
-	tar xfz gitleaks.tar.gz -C /usr/local/bin/ gitleaks
 	npm add --global markdownlint-cli
 	echo "**** Install Coverage tools ****"
 	curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov"
