@@ -4,17 +4,18 @@ LABEL org.opencontainers.image.authors="Authelia Team <team@authelia.com>"
 
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.104.0"
-ARG PNPM_VERSION="10.15.1"
+ARG BUILDKITE_VERSION="3.105.0"
 ARG BUILDX_VERSION="0.28.0"
-ARG OVERLAY_VERSION="3.2.1.0"
-ARG GOLANGCILINT_VERSION="2.4.0"
-ARG REVIEWDOG_VERSION="0.21.0"
-ARG CT_VERSION="3.13.0"
 # Authelia fork
 ARG CR_VERSION="1.6.1"
-ARG HELM_VERSION="3.18.4"
+ARG CT_VERSION="3.13.0"
+ARG GOLANGCILINT_VERSION="2.4.0"
+ARG HELM_VERSION="3.19.0"
 ARG KUBECTL_VERSION="1.33.4"
+ARG OVERLAY_VERSION="3.2.1.0"
+ARG PNPM_VERSION="10.16.1"
+ARG REVIEWDOG_VERSION="0.21.0"
+ARG SYFT_VERSION="1.33.0"
 
 ENV \
 	PATH="$PATH:/buildkite/.go/bin" \
@@ -134,6 +135,7 @@ RUN <<EOF
 	npm add --global nyc
 	echo "**** Install Release tools ****"
 	npm add --global conventional-changelog-cli
+	curl -sSfL https://get.anchore.io/syft | sh -s -- -b /usr/local/bin v${SYFT_VERSION}
 	echo "**** Cleanup ****"
 	find /usr/local/bin/ -not -user root -exec chown root:root {} +
 	rm -rf /tmp/* /buildkite/.pnpm-store
