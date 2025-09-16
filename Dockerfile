@@ -4,12 +4,14 @@ LABEL org.opencontainers.image.authors="Authelia Team <team@authelia.com>"
 
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.105.0"
+ARG BUILDKITE_VERSION="3.106.0"
 ARG BUILDX_VERSION="0.28.0"
 # Authelia fork
 ARG CR_VERSION="1.6.1"
 ARG CT_VERSION="3.13.0"
 ARG GOLANGCILINT_VERSION="2.4.0"
+ARG GORELEASER_VERSION="2.12.1"
+ARG GRYPE_VERSION="0.100.0"
 ARG HELM_VERSION="3.19.0"
 ARG KUBECTL_VERSION="1.33.4"
 ARG OVERLAY_VERSION="3.2.1.0"
@@ -135,6 +137,9 @@ RUN <<EOF
 	npm add --global nyc
 	echo "**** Install Release tools ****"
 	npm add --global conventional-changelog-cli
+	curl -sSfL -o goreleaser.apk https://github.com/goreleaser/goreleaser/releases/download/v${GORELEASER_VERSION}/goreleaser_${GORELEASER_VERSION}_x86_64.apk
+	apk add --allow-untrusted goreleaser.apk
+	curl -sSfL https://get.anchore.io/grype | sh -s -- -b /usr/local/bin v${GRYPE_VERSION}
 	curl -sSfL https://get.anchore.io/syft | sh -s -- -b /usr/local/bin v${SYFT_VERSION}
 	echo "**** Cleanup ****"
 	find /usr/local/bin/ -not -user root -exec chown root:root {} +
