@@ -99,23 +99,24 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **06/10/2025:** Update buildkite agent (v3.108.0), buildx (v0.29.1), goreleaser (v2.12.5) and pnpm (v10.18.0)
 - **01/10/2025:** Update buildx (v0.29.0) and goreleaser (v2.12.4)
-- **27/09/2025:** Update buildkite agent(v3.107.2), golangci-lint (v2.5.0), goreleaser (v2.12.3) and pnpm (v10.17.1)
-- **19/09/2025:** Update buildkite agent(v3.107.0), goreleaser (v2.12.2) and pnpm (v10.17.0)
-- **16/09/2025:** Update buildkite agent(v3.106.0), add goreleaser (v2.12.1) and grype (v1.33.0)
-- **16/09/2025:** Update buildkite agent(v3.105.0), helm (v3.19.0), pnpm (v10.16.1), and add syft (v1.33.0)
-- **08/09/2025:** Update buildkite agent(v3.104.0), pnpm (v10.15.1), buildx (v0.27.0), reviewdog (v0.21.0), add apt and remove gitleaks
+- **27/09/2025:** Update buildkite agent (v3.107.2), golangci-lint (v2.5.0), goreleaser (v2.12.3) and pnpm (v10.17.1)
+- **19/09/2025:** Update buildkite agent (v3.107.0), goreleaser (v2.12.2) and pnpm (v10.17.0)
+- **16/09/2025:** Update buildkite agent (v3.106.0), add goreleaser (v2.12.1) and grype (v1.33.0)
+- **16/09/2025:** Update buildkite agent (v3.105.0), helm (v3.19.0), pnpm (v10.16.1), and add syft (v1.33.0)
+- **08/09/2025:** Update buildkite agent (v3.104.0), pnpm (v10.15.1), buildx (v0.27.0), reviewdog (v0.21.0), add apt and remove gitleaks
 - **26/08/2025:** Add .editorconfig and update Dockerfile to use RUN Heredoc syntax
 - **26/08/2025:** Revert helm to v3.18.4
 - **26/08/2025:** Pull authelia/crossbuild container in dockersetup script
 - **26/08/2025:** Update pnpm (v10.15.0), buildx (v0.27.0), helm (v3.18.6) and remove eslint, musl-cc
-- **15/08/2025:** Update buildkite agent(v3.103.1), golangci-lint (v2.4.0), pnpm (v10.14.0), helm (v3.18.5), kubectl (v1.33.4)
-- **24/07/2025:** Update buildkite agent(v3.103.0), buildx (v0.26.1), golangci-lint (v2.3.0) and add gitleaks (v8.28.0)
-- **12/07/2025:** Update buildkite agent(v3.102.0), pnpm (v10.13.1), golangci-lint (v2.2.2), helm (v3.18.4)
-- **04/07/2025:** Update buildkite agent(v3.101.0)
-- **02/07/2025:** Update buildkite agent(v3.100.1), pnpm (v10.12.4), buildx (v0.25.0), musl-cross (20250520), s6-overlay (v3.2.1.0), golangci-lint (v2.2.1), chart-testing (v3.13.0), helm (v3.18.3), kubectl (v1.33.2)
-- **04/05/2025:** Update buildkite agent(v3.97.0), pnpm (v10.10.0), buildx (v0.23.0), helm (v3.17.3), kubectl (v1.33.0)
-- **11/03/2025:** Update buildkite agent(v3.93.1), pnpm (v10.6.2), buildx (v0.21.2), golangci-lint (v1.64.6)
+- **15/08/2025:** Update buildkite agent (v3.103.1), golangci-lint (v2.4.0), pnpm (v10.14.0), helm (v3.18.5), kubectl (v1.33.4)
+- **24/07/2025:** Update buildkite agent (v3.103.0), buildx (v0.26.1), golangci-lint (v2.3.0) and add gitleaks (v8.28.0)
+- **12/07/2025:** Update buildkite agent (v3.102.0), pnpm (v10.13.1), golangci-lint (v2.2.2), helm (v3.18.4)
+- **04/07/2025:** Update buildkite agent (v3.101.0)
+- **02/07/2025:** Update buildkite agent (v3.100.1), pnpm (v10.12.4), buildx (v0.25.0), musl-cross (20250520), s6-overlay (v3.2.1.0), golangci-lint (v2.2.1), chart-testing (v3.13.0), helm (v3.18.3), kubectl (v1.33.2)
+- **04/05/2025:** Update buildkite agent (v3.97.0), pnpm (v10.10.0), buildx (v0.23.0), helm (v3.17.3), kubectl (v1.33.0)
+- **11/03/2025:** Update buildkite agent (v3.93.1), pnpm (v10.6.2), buildx (v0.21.2), golangci-lint (v1.64.6)
 - **17/02/2025:** Update pnpm (v10.4.1), musl-cross (20250206)
 - **16/02/2025:** Update buildkite agent (v3.92.1), pnpm (v10.4.0), golangci-lint (v1.64.5), helm (v3.17.1), kubectl (v1.32.2)
 - **08/02/2025:** Update buildkite agent (v3.91.0), pnpm (v10.2.1)
