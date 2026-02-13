@@ -10,7 +10,6 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
-	"regexp"
 	"sort"
 	"strings"
 	"text/template"
@@ -40,30 +39,14 @@ func main() {
 	}
 
 	client := &http.Client{Timeout: 10 * time.Second}
+	ctx := context.Background()
 
-	for repo, name := range versionListGitHub {
-		version, err := getGitHubLatestReleaseTag(context.Background(), client, repo)
-		if err != nil {
-			panic(err)
-		}
+	changes = processVersionList(ctx, changes, current, latest, versionListGitHub, client, getGitHubLatestReleaseTag)
+	changes = processVersionList(ctx, changes, current, latest, versionListNPM, client, getNPMLatestVersion)
 
-		c, ok := current[name]
-		if ok && c != version {
-			changes = append(changes, fmt.Sprintf("%s (v%s)", name, version))
-		}
-		latest[name] = version
+	if len(changes) == 0 {
+		os.Exit(0)
 	}
-
-	for packageName, name := range versionListNPM {
-		version, err := getNPMLatestVersion(context.Background(), client, packageName)
-		if err != nil {
-			panic(err)
-		}
-
-		latest[name] = version
-	}
-
-	latest["chart-releaser"] = "1.6.1"
 
 	values := Values{Versions: latest}
 
@@ -95,28 +78,28 @@ func main() {
 	}
 }
 
-// versionListNPM maps the npm package name (key) to the internal package name (value).
-var versionListNPM = map[string]string{
-	"pnpm": "pnpm",
-}
+type versionChecker func(ctx context.Context, client *http.Client, repo string) (version string, err error)
 
-// versionListGitHub maps the github repo name (key) to the internal package name (value).
-var versionListGitHub = map[string]string{
-	"docker/buildx":              "buildx",
-	"buildkite/agent":            "buildkite agent",
-	"helm/helm":                  "helm",
-	"helm/chart-testing":         "chart-testing",
-	"helm/chart-releaser":        "chart-releaser",
-	"golangci/golangci-lint":     "golangci-lint",
-	"reviewdog/reviewdog":        "reviewdog",
-	"just-containers/s6-overlay": "overlay",
-	"anchore/syft":               "syft",
-	"anchore/grype":              "grype",
-	"goreleaser/goreleaser":      "goreleaser",
-	"kubernetes/kubernetes":      "kubectl",
-}
+func processVersionList(ctx context.Context, changes []string, current map[string]string, latest map[string]string, versionList map[string]string, client *http.Client, checker versionChecker) (out []string) {
+	for repo, name := range versionList {
+		if isStringInSlice(name, frozenVersions) {
+			continue
+		}
 
-var patternVersion = regexp.MustCompile(`^ARG ([A-Z_]+)_VERSION="(\d+\.\d+\.\d+(\.\d+)?)"$`)
+		version, err := checker(ctx, client, repo)
+		if err != nil {
+			panic(err)
+		}
+
+		c, ok := current[name]
+		if ok && c != version {
+			changes = append(changes, fmt.Sprintf("%s (v%s)", name, version))
+		}
+		latest[name] = version
+	}
+
+	return changes
+}
 
 func readCurrentVersions(path string) (versions map[string]string, err error) {
 	file, err := os.OpenFile(path, os.O_RDONLY, 0644)
@@ -153,14 +136,6 @@ func readCurrentVersions(path string) (versions map[string]string, err error) {
 	}
 
 	return versions, nil
-}
-
-type Values struct {
-	Versions map[string]string
-}
-
-type latestReleaseResponse struct {
-	TagName string `json:"tag_name"`
 }
 
 func getGitHubLatestReleaseTag(ctx context.Context, client *http.Client, repo string) (string, error) {
@@ -298,4 +273,14 @@ func stringJoinWithAnd(items []string) string {
 			" and " +
 			items[len(items)-1]
 	}
+}
+
+func isStringInSlice(needle string, haystack []string) bool {
+	for _, hay := range haystack {
+		if hay == needle {
+			return true
+		}
+	}
+
+	return false
 }
