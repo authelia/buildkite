@@ -4,6 +4,13 @@ import "regexp"
 
 var patternVersion = regexp.MustCompile(`^ARG ([A-Z_]+)_VERSION="(\d+\.\d+\.\d+(\.\d+)?)"$`)
 
+var currentVersionMap = map[string]string{
+	"GOLANGCILINT": "golangci-lint",
+	"CR":           "chart-releaser",
+	"CT":           "chart-testing",
+	"BUILDKITE":    "buildkite agent",
+}
+
 var frozenVersions = []string{
 	"chart-releaser",
 }

@@ -120,16 +120,9 @@ func readCurrentVersions(path string) (versions map[string]string, err error) {
 			name := match[1]
 			version := match[2]
 
-			switch name {
-			case "GOLANGCILINT":
-				versions["golangci-lint"] = version
-			case "CR":
-				versions["chart-releaser"] = version
-			case "CT":
-				versions["chart-testing"] = version
-			case "BUILDKITE":
-				versions["buildkite agent"] = version
-			default:
+			if mname, ok := currentVersionMap[name]; ok {
+				versions[mname] = version
+			} else {
 				versions[strings.ToLower(name)] = version
 			}
 		}
