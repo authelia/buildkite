@@ -78,8 +78,6 @@ func main() {
 	}
 }
 
-type versionChecker func(ctx context.Context, client *http.Client, repo string) (version string, err error)
-
 func processVersionList(ctx context.Context, changes []string, current map[string]string, latest map[string]string, versionList map[string]string, client *http.Client, checker versionChecker) (out []string) {
 	for repo, name := range versionList {
 		if isStringInSlice(name, frozenVersions) {
