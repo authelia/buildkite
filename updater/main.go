@@ -48,6 +48,12 @@ func main() {
 		os.Exit(0)
 	}
 
+	for _, name := range frozenVersions {
+		if value, ok := current[name]; ok {
+			latest[name] = value
+		}
+	}
+
 	values := Values{Versions: latest}
 
 	out, err := os.OpenFile("./Dockerfile", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
