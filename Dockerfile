@@ -4,8 +4,8 @@ LABEL org.opencontainers.image.authors="Authelia Team <team@authelia.com>"
 
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.118.1"
-ARG BUILDX_VERSION="0.31.1"
+ARG BUILDKITE_VERSION="3.119.1"
+ARG BUILDX_VERSION="0.32.1"
 # Authelia fork
 ARG CR_VERSION="1.6.1"
 ARG CT_VERSION="3.14.0"
