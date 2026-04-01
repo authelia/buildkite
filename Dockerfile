@@ -4,13 +4,13 @@ LABEL org.opencontainers.image.authors="Authelia Team <team@authelia.com>"
 
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="3.120.3"
-ARG BUILDX_VERSION="0.32.1"
+ARG BUILDKITE_VERSION="3.121.0"
+ARG BUILDX_VERSION="0.33.0"
 # Authelia fork
 ARG CR_VERSION="1.6.1"
 ARG CT_VERSION="3.14.0"
 ARG GOLANGCILINT_VERSION="2.11.4"
-ARG GORELEASER_VERSION="2.14.3"
+ARG GORELEASER_VERSION="2.15.2"
 ARG GRYPE_VERSION="0.110.0"
 ARG HELM_VERSION="4.1.3"
 ARG KUBECTL_VERSION="1.35.3"
@@ -85,6 +85,7 @@ RUN <<EOF
 		shadow \
 		sudo \
 		tzdata \
+		typos \
 		zlib-dev \
 		zstd
 EOF

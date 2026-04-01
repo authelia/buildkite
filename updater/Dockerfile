@@ -85,6 +85,7 @@ RUN <<EOF
 		shadow \
 		sudo \
 		tzdata \
+		typos \
 		zlib-dev \
 		zstd
 EOF
