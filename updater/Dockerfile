@@ -18,6 +18,7 @@ ARG OVERLAY_VERSION="{{ .Versions.overlay }}"
 ARG PNPM_VERSION="{{ .Versions.pnpm }}"
 ARG REVIEWDOG_VERSION="{{ .Versions.reviewdog }}"
 ARG SYFT_VERSION="{{ .Versions.syft }}"
+ARG TYPOS_VERSION="{{ .Versions.typos }}"
 
 ENV \
 	PATH="$PATH:/buildkite/.go/bin" \
@@ -85,7 +86,6 @@ RUN <<EOF
 		shadow \
 		sudo \
 		tzdata \
-		typos \
 		zlib-dev \
 		zstd
 EOF
@@ -131,6 +131,8 @@ RUN <<EOF
 	echo "**** Install Linting tools ****"
 	curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh" | sh -s -- -b /bin v${GOLANGCILINT_VERSION}
 	curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION}
+	curl -sSfL -o typos.tar.gz "https://github.com/crate-ci/typos/releases/download/v${TYPOS_VERSION}/typos-v${TYPOS_VERSION}-${ARCH_ALT}-unknown-linux-musl.tar.gz"
+	tar xfz typos.tar.gz -C /usr/local/bin ./typos
 	npm add --global markdownlint-cli
 	echo "**** Install Coverage tools ****"
 	curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov"

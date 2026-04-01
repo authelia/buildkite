@@ -22,16 +22,17 @@ var versionListNPM = map[string]string{
 
 // versionListGitHub maps the github repo name (key) to the internal package name (value).
 var versionListGitHub = map[string]string{
-	"docker/buildx":              "buildx",
-	"buildkite/agent":            "buildkite agent",
-	"helm/helm":                  "helm",
-	"helm/chart-testing":         "chart-testing",
-	"helm/chart-releaser":        "chart-releaser",
-	"golangci/golangci-lint":     "golangci-lint",
-	"reviewdog/reviewdog":        "reviewdog",
-	"just-containers/s6-overlay": "overlay",
-	"anchore/syft":               "syft",
 	"anchore/grype":              "grype",
+	"anchore/syft":               "syft",
+	"buildkite/agent":            "buildkite agent",
+	"crate-ci/typos":             "typos",
+	"docker/buildx":              "buildx",
+	"golangci/golangci-lint":     "golangci-lint",
 	"goreleaser/goreleaser":      "goreleaser",
+	"helm/chart-releaser":        "chart-releaser",
+	"helm/chart-testing":         "chart-testing",
+	"helm/helm":                  "helm",
+	"just-containers/s6-overlay": "overlay",
 	"kubernetes/kubernetes":      "kubectl",
+	"reviewdog/reviewdog":        "reviewdog",
 }

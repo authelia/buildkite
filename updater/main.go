@@ -41,12 +41,18 @@ func main() {
 	client := &http.Client{Timeout: 10 * time.Second}
 	ctx := context.Background()
 
+	fmt.Println("Checking GitHub releases...")
 	changes = processVersionList(ctx, changes, current, latest, versionListGitHub, client, getGitHubLatestReleaseTag)
+
+	fmt.Println("Checking npm packages...")
 	changes = processVersionList(ctx, changes, current, latest, versionListNPM, client, getNPMLatestVersion)
 
 	if len(changes) == 0 {
+		fmt.Println("No updates found.")
 		os.Exit(0)
 	}
+
+	fmt.Printf("Found %d update(s), writing Dockerfile...\n", len(changes))
 
 	for _, name := range frozenVersions {
 		if value, ok := current[name]; ok {
@@ -87,6 +93,7 @@ func main() {
 func processVersionList(ctx context.Context, changes []string, current map[string]string, latest map[string]string, versionList map[string]string, client *http.Client, checker versionChecker) (out []string) {
 	for repo, name := range versionList {
 		if isStringInSlice(name, frozenVersions) {
+			fmt.Printf("  %-20s skipped (frozen)\n", name)
 			continue
 		}
 
@@ -97,6 +104,12 @@ func processVersionList(ctx context.Context, changes []string, current map[strin
 
 		c, ok := current[name]
 		if ok && c != version {
+			fmt.Printf("  %-20s %s -> %s\n", name, c, version)
+			changes = append(changes, fmt.Sprintf("%s (v%s)", name, version))
+		} else if ok {
+			fmt.Printf("  %-20s %s (up to date)\n", name, version)
+		} else {
+			fmt.Printf("  %-20s %s (new)\n", name, version)
 			changes = append(changes, fmt.Sprintf("%s (v%s)", name, version))
 		}
 		latest[name] = version
