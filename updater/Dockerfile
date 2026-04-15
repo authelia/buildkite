@@ -17,6 +17,7 @@ ARG KUBECTL_VERSION="{{ .Versions.kubectl }}"
 ARG OVERLAY_VERSION="{{ .Versions.overlay }}"
 ARG PNPM_VERSION="{{ .Versions.pnpm }}"
 ARG REVIEWDOG_VERSION="{{ .Versions.reviewdog }}"
+ARG SHELLCHECK_VERSION="{{ .Versions.shellcheck }}"
 ARG SYFT_VERSION="{{ .Versions.syft }}"
 ARG TYPOS_VERSION="{{ .Versions.typos }}"
 
@@ -133,6 +134,8 @@ RUN <<EOF
 	curl -sSfL "https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh" | sh -s -- -b /bin v${REVIEWDOG_VERSION}
 	curl -sSfL -o typos.tar.gz "https://github.com/crate-ci/typos/releases/download/v${TYPOS_VERSION}/typos-v${TYPOS_VERSION}-${ARCH_ALT}-unknown-linux-musl.tar.gz"
 	tar xfz typos.tar.gz -C /usr/local/bin ./typos
+	curl -sSfL -o shellcheck.tar.xz "https://github.com/koalaman/shellcheck/releases/download/v${SHELLCHECK_VERSION}/shellcheck-v${SHELLCHECK_VERSION}.linux.${ARCH_ALT}.tar.xz"
+	tar xfJ shellcheck.tar.xz -C /usr/local/bin --strip-components=1 shellcheck-v${SHELLCHECK_VERSION}/shellcheck
 	npm add --global markdownlint-cli
 	echo "**** Install Coverage tools ****"
 	curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov"

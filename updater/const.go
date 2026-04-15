@@ -33,6 +33,7 @@ var versionListGitHub = map[string]string{
 	"helm/chart-testing":         "chart-testing",
 	"helm/helm":                  "helm",
 	"just-containers/s6-overlay": "overlay",
+	"koalaman/shellcheck":        "shellcheck",
 	"kubernetes/kubernetes":      "kubectl",
 	"reviewdog/reviewdog":        "reviewdog",
 }
