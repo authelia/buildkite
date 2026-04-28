@@ -99,6 +99,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **28/04/2026:** Update buildkite agent (v3.124.0), goreleaser (v2.15.4), grype (v0.111.1), kubectl (v1.36.0), pnpm (v10.33.2), syft (v1.43.0) and typos (v1.45.2)
 - **15/04/2026:** Update goreleaser (v2.15.3) and add shellcheck (v0.11.0)
 - **14/04/2026:** Update buildkite agent (v3.123.0) and typos (v1.45.1)
 - **10/04/2026:** Update grype (v0.111.0)
