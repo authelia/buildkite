@@ -142,7 +142,7 @@ RUN <<EOF
 	chmod +x /usr/local/bin/codecov
 	npm add --global nyc
 	echo "**** Install Release tools ****"
-	npm add --global conventional-changelog-cli
+	npm add --global conventional-changelog
 	curl -sSfL -o goreleaser.apk https://github.com/goreleaser/goreleaser/releases/download/v${GORELEASER_VERSION}/goreleaser_${GORELEASER_VERSION}_x86_64.apk
 	apk add --allow-untrusted goreleaser.apk
 	curl -sSfL https://get.anchore.io/grype | sh -s -- -b /usr/local/bin v${GRYPE_VERSION}
