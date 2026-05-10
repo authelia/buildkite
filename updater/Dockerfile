@@ -9,12 +9,13 @@ ARG BUILDX_VERSION="{{ .Versions.buildx }}"
 # Authelia fork
 ARG CR_VERSION="{{ index .Versions "chart-releaser" }}"
 ARG CT_VERSION="{{ index .Versions "chart-testing" }}"
+ARG GH_VERSION="{{ .Versions.gh }}"
 ARG GOLANGCILINT_VERSION="{{ index .Versions "golangci-lint" }}"
 ARG GORELEASER_VERSION="{{ .Versions.goreleaser }}"
 ARG GRYPE_VERSION="{{ .Versions.grype }}"
 ARG HELM_VERSION="{{ .Versions.helm }}"
 ARG KUBECTL_VERSION="{{ .Versions.kubectl }}"
-ARG OVERLAY_VERSION="{{ .Versions.overlay }}"
+ARG OVERLAY_VERSION="{{ index .Versions "s6-overlay" }}"
 ARG PNPM_VERSION="{{ .Versions.pnpm }}"
 ARG REVIEWDOG_VERSION="{{ .Versions.reviewdog }}"
 ARG SHELLCHECK_VERSION="{{ .Versions.shellcheck }}"
@@ -33,6 +34,7 @@ ENV \
 	GOPATH="/buildkite/.go"
 
 RUN <<EOF
+	set -eo pipefail
 	echo "**** Install Essential Packages ****"
 	apk add --no-cache \
 		curl \
@@ -41,6 +43,7 @@ RUN <<EOF
 EOF
 
 RUN <<EOF
+	set -eo pipefail
 	echo "**** Install Buildkite ****"
     mkdir -p /buildkite/builds /buildkite/hooks /buildkite/plugins
     curl -sSfL -o /usr/local/bin/ssh-env-config.sh "https://raw.githubusercontent.com/buildkite/docker-ssh-env-config/master/ssh-env-config.sh"
@@ -54,6 +57,7 @@ RUN <<EOF
 EOF
 
 RUN <<EOF
+	set -eo pipefail
 	echo "**** Install Authelia CI pre-requisites ****"
     echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
     echo "@edget http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
@@ -92,6 +96,7 @@ RUN <<EOF
 EOF
 
 RUN <<EOF
+	set -eo pipefail
 	cd /tmp
 	echo "**** Add Python Packages ****"
 	pip install yamale --break-system-packages
@@ -143,6 +148,8 @@ RUN <<EOF
 	npm add --global nyc
 	echo "**** Install Release tools ****"
 	npm add --global conventional-changelog
+	curl -sSfL -o gh.tar.gz "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_${ARCH}.tar.gz"
+    tar xfz gh.tar.gz -C /usr/local/bin --strip-components=2 gh_${GH_VERSION}_linux_${ARCH}/bin/gh
 	curl -sSfL -o goreleaser.apk https://github.com/goreleaser/goreleaser/releases/download/v${GORELEASER_VERSION}/goreleaser_${GORELEASER_VERSION}_x86_64.apk
 	apk add --allow-untrusted goreleaser.apk
 	curl -sSfL https://get.anchore.io/grype | sh -s -- -b /usr/local/bin v${GRYPE_VERSION}

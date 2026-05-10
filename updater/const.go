@@ -9,6 +9,7 @@ var currentVersionMap = map[string]string{
 	"CR":           "chart-releaser",
 	"CT":           "chart-testing",
 	"BUILDKITE":    "buildkite agent",
+	"OVERLAY":      "s6-overlay",
 }
 
 var frozenVersions = []string{
@@ -25,6 +26,7 @@ var versionListGitHub = map[string]string{
 	"anchore/grype":              "grype",
 	"anchore/syft":               "syft",
 	"buildkite/agent":            "buildkite agent",
+	"cli/cli":                    "gh",
 	"crate-ci/typos":             "typos",
 	"docker/buildx":              "buildx",
 	"golangci/golangci-lint":     "golangci-lint",
@@ -32,7 +34,7 @@ var versionListGitHub = map[string]string{
 	"helm/chart-releaser":        "chart-releaser",
 	"helm/chart-testing":         "chart-testing",
 	"helm/helm":                  "helm",
-	"just-containers/s6-overlay": "overlay",
+	"just-containers/s6-overlay": "s6-overlay",
 	"koalaman/shellcheck":        "shellcheck",
 	"kubernetes/kubernetes":      "kubectl",
 	"reviewdog/reviewdog":        "reviewdog",
