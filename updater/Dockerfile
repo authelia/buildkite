@@ -147,7 +147,7 @@ RUN <<EOF
 	chmod +x /usr/local/bin/codecov
 	npm add --global nyc
 	echo "**** Install Release tools ****"
-	npm add --global conventional-changelog
+	npm add --global conventional-changelog conventional-changelog-angular
 	curl -sSfL -o gh.tar.gz "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_${ARCH}.tar.gz"
     tar xfz gh.tar.gz -C /usr/local/bin --strip-components=2 gh_${GH_VERSION}_linux_${ARCH}/bin/gh
 	curl -sSfL -o goreleaser.apk https://github.com/goreleaser/goreleaser/releases/download/v${GORELEASER_VERSION}/goreleaser_${GORELEASER_VERSION}_x86_64.apk
