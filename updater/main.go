@@ -83,11 +83,18 @@ func main() {
 		return changes[i] < changes[j]
 	})
 
-	line := fmt.Sprintf("- **%s:** Update %s", time.Now().Format("02/01/2006"), stringJoinWithAnd(changes))
+	changelog := make([]string, len(changes))
+	for i, name := range changes {
+		changelog[i] = fmt.Sprintf("%s (v%s)", name, latest[name])
+	}
+
+	line := fmt.Sprintf("- **%s:** Update %s", time.Now().Format("02/01/2006"), stringJoinWithAnd(changelog))
 
 	if err = insertAfterVersion("./README.md", line, "## Version"); err != nil {
 		panic(err)
 	}
+
+	fmt.Printf("\nCommit message:\nbuild(deps): update %s\n", stringJoinWithAnd(changes))
 }
 
 func processVersionList(ctx context.Context, changes []string, current map[string]string, latest map[string]string, versionList map[string]string, client *http.Client, checker versionChecker) (out []string) {
@@ -105,12 +112,12 @@ func processVersionList(ctx context.Context, changes []string, current map[strin
 		c, ok := current[name]
 		if ok && c != version {
 			fmt.Printf("  %-20s %s -> %s\n", name, c, version)
-			changes = append(changes, fmt.Sprintf("%s (v%s)", name, version))
+			changes = append(changes, name)
 		} else if ok {
 			fmt.Printf("  %-20s %s (up to date)\n", name, version)
 		} else {
 			fmt.Printf("  %-20s %s (new)\n", name, version)
-			changes = append(changes, fmt.Sprintf("%s (v%s)", name, version))
+			changes = append(changes, name)
 		}
 		latest[name] = version
 	}
