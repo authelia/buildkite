@@ -74,6 +74,7 @@ RUN <<EOF
 		gettext \
 		git \
 		go@edge \
+		gotestsum \
 		hub@edget \
 		jq \
 		libc6-compat \
