@@ -1,0 +1,27 @@
+#!/command/with-contenv bash
+
+set -eo pipefail
+
+# The crossbuild container mounts its toolchain out of /buildkite/.tools, and bind mount sources are
+# resolved by whichever daemon creates the container. On a shared daemon that is the host, which
+# cannot see inside this image, so the toolchain has to be published into the bind mounted agent
+# tree. Doing it here keeps it in step with the image instead of relying on a manual copy.
+#
+# /usr/local/include is deliberately not published: it is supplied by the host, not by this image.
+
+TOOLS="/buildkite/.tools"
+STAMP=$(stat -c '%n %s %Y' /usr/lib/go/VERSION /usr/bin/goreleaser /usr/local/bin/grype /usr/local/bin/syft | md5sum)
+
+if [[ -f "${TOOLS}/.stamp" ]] && [[ "$(cat "${TOOLS}/.stamp")" == "${STAMP}" ]]; then
+  echo "Toolchain in ${TOOLS} is already current."
+  exit 0
+fi
+
+echo "Publishing toolchain to ${TOOLS}..."
+
+mkdir -p "${TOOLS}/bin"
+rm -rf "${TOOLS}/go"
+cp -a /usr/lib/go "${TOOLS}/go"
+cp -a /usr/bin/goreleaser /usr/local/bin/grype /usr/local/bin/syft "${TOOLS}/bin/"
+
+echo "${STAMP}" > "${TOOLS}/.stamp"

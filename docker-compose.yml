@@ -20,19 +20,43 @@ services:
     image: authelia/buildkite
     container_name: buildkite1
     privileged: true
+    group_add:
+      # The gid of the docker group on the host, so the agent can reach the mounted socket.
+      - "971"
     volumes:
-      - /path/on/host/docker:/buildkite/.docker
-      - /path/on/host/ssh:/buildkite/.ssh
-      - /path/on/host/go:/buildkite/.go
-      - /path/on/host/hooks:/buildkite/hooks
+      # Every path under /buildkite has to be identical on the host, because the host daemon is
+      # what resolves the bind mount sources of the containers the suites create.
+      - /buildkite/.cache:/buildkite/.cache
+      - /buildkite/.git-credentials:/buildkite/.git-credentials
+      - /buildkite/.gitconfig:/buildkite/.gitconfig
+      - /buildkite/.gnupg:/buildkite/.gnupg
+      - /buildkite/.go:/buildkite/.go
+      - /buildkite/.local/share/pnpm/store:/buildkite/.local/share/pnpm/store
+      - /buildkite/.sign:/buildkite/.sign
+      - /buildkite/.ssh:/buildkite/.ssh
+      - /buildkite/.tools:/buildkite/.tools
+      - /buildkite/builds:/buildkite/builds
+      - /buildkite/hooks:/buildkite/hooks
+      # Also mounted at /tmp so the agent, the host and the suite containers agree on one path.
+      - /buildkite/tmp/1:/buildkite/tmp/1
+      - /buildkite/tmp/1:/tmp
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - net
     restart: unless-stopped
     environment:
+      - AGENT_CONTAINER=buildkite1
       - BUILDKITE_AGENT_NAME=named-node-1
       - BUILDKITE_AGENT_TOKEN=
       - BUILDKITE_AGENT_TAGS=
       - BUILDKITE_AGENT_PRIORITY=
+      # Docker outside of Docker: the daemon is the host's, reached through the socket above.
+      - DOCKERD_ENABLED=false
+      - DOCKER_GID=971
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      # Per host slot, so concurrent suites cannot collide on compose project, subnet or ports.
+      - SUITE_SLOT=1
+      - SUITE_TMP=/buildkite/tmp/1
       - PUID=1000
       - PGID=1000
       - TZ=Australia/Melbourne
@@ -41,19 +65,43 @@ services:
     image: authelia/buildkite
     container_name: buildkite2
     privileged: true
+    group_add:
+      # The gid of the docker group on the host, so the agent can reach the mounted socket.
+      - "971"
     volumes:
-      - /path/on/host/docker:/buildkite/.docker
-      - /path/on/host/ssh:/buildkite/.ssh
-      - /path/on/host/go:/buildkite/.go
-      - /path/on/host/hooks:/buildkite/hooks
+      # Every path under /buildkite has to be identical on the host, because the host daemon is
+      # what resolves the bind mount sources of the containers the suites create.
+      - /buildkite/.cache:/buildkite/.cache
+      - /buildkite/.git-credentials:/buildkite/.git-credentials
+      - /buildkite/.gitconfig:/buildkite/.gitconfig
+      - /buildkite/.gnupg:/buildkite/.gnupg
+      - /buildkite/.go:/buildkite/.go
+      - /buildkite/.local/share/pnpm/store:/buildkite/.local/share/pnpm/store
+      - /buildkite/.sign:/buildkite/.sign
+      - /buildkite/.ssh:/buildkite/.ssh
+      - /buildkite/.tools:/buildkite/.tools
+      - /buildkite/builds:/buildkite/builds
+      - /buildkite/hooks:/buildkite/hooks
+      # Also mounted at /tmp so the agent, the host and the suite containers agree on one path.
+      - /buildkite/tmp/2:/buildkite/tmp/2
+      - /buildkite/tmp/2:/tmp
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - net
     restart: unless-stopped
     environment:
+      - AGENT_CONTAINER=buildkite2
       - BUILDKITE_AGENT_NAME=named-node-2
-      - BUILDKITE_AGENT_TOKEN=tokenhere
+      - BUILDKITE_AGENT_TOKEN=
       - BUILDKITE_AGENT_TAGS=
       - BUILDKITE_AGENT_PRIORITY=
+      # Docker outside of Docker: the daemon is the host's, reached through the socket above.
+      - DOCKERD_ENABLED=false
+      - DOCKER_GID=971
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      # Per host slot, so concurrent suites cannot collide on compose project, subnet or ports.
+      - SUITE_SLOT=2
+      - SUITE_TMP=/buildkite/tmp/2
       - PUID=1000
       - PGID=1000
       - TZ=Australia/Melbourne
@@ -62,19 +110,43 @@ services:
     image: authelia/buildkite
     container_name: buildkite3
     privileged: true
+    group_add:
+      # The gid of the docker group on the host, so the agent can reach the mounted socket.
+      - "971"
     volumes:
-      - /path/on/host/docker:/buildkite/.docker
-      - /path/on/host/ssh:/buildkite/.ssh
-      - /path/on/host/go:/buildkite/.go
-      - /path/on/host/hooks:/buildkite/hooks
+      # Every path under /buildkite has to be identical on the host, because the host daemon is
+      # what resolves the bind mount sources of the containers the suites create.
+      - /buildkite/.cache:/buildkite/.cache
+      - /buildkite/.git-credentials:/buildkite/.git-credentials
+      - /buildkite/.gitconfig:/buildkite/.gitconfig
+      - /buildkite/.gnupg:/buildkite/.gnupg
+      - /buildkite/.go:/buildkite/.go
+      - /buildkite/.local/share/pnpm/store:/buildkite/.local/share/pnpm/store
+      - /buildkite/.sign:/buildkite/.sign
+      - /buildkite/.ssh:/buildkite/.ssh
+      - /buildkite/.tools:/buildkite/.tools
+      - /buildkite/builds:/buildkite/builds
+      - /buildkite/hooks:/buildkite/hooks
+      # Also mounted at /tmp so the agent, the host and the suite containers agree on one path.
+      - /buildkite/tmp/3:/buildkite/tmp/3
+      - /buildkite/tmp/3:/tmp
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - net
     restart: unless-stopped
     environment:
+      - AGENT_CONTAINER=buildkite3
       - BUILDKITE_AGENT_NAME=named-node-3
-      - BUILDKITE_AGENT_TOKEN=tokenhere
+      - BUILDKITE_AGENT_TOKEN=
       - BUILDKITE_AGENT_TAGS=
       - BUILDKITE_AGENT_PRIORITY=
+      # Docker outside of Docker: the daemon is the host's, reached through the socket above.
+      - DOCKERD_ENABLED=false
+      - DOCKER_GID=971
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      # Per host slot, so concurrent suites cannot collide on compose project, subnet or ports.
+      - SUITE_SLOT=3
+      - SUITE_TMP=/buildkite/tmp/3
       - PUID=1000
       - PGID=1000
       - TZ=Australia/Melbourne

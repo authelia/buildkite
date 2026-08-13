@@ -6,6 +6,14 @@ PGID=${PGID:-911}
 groupmod -o -g "$PGID" buildkite
 usermod -o -u "$PUID" buildkite
 
+if [[ -n "${DOCKER_GID:-}" ]]; then
+  if ! getent group "${DOCKER_GID}" > /dev/null; then
+    groupadd -o -g "${DOCKER_GID}" dockerhost
+  fi
+
+  usermod -aG "$(getent group "${DOCKER_GID}" | cut -d: -f1)" buildkite
+fi
+
 cat <<'EOF'
 --------------------------------------------
    / \  _   _| |_| |__   ___| (_) __ _
@@ -23,6 +31,7 @@ GID/UID
 EOF
 echo "User uid:    $(id -u buildkite)
 User gid:    $(id -g buildkite)
+User groups: $(id -Gn buildkite)
 --------------------------------------------
 "
 chown -R buildkite:buildkite /buildkite

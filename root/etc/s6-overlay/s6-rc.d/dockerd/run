@@ -1,4 +1,8 @@
 #!/command/with-contenv bash
 
+if [[ "${DOCKERD_ENABLED:-true}" != "true" ]]; then
+    exec s6-pause
+fi
+
 exec \
     s6-setuidgid root dockerd-entrypoint.sh > /dev/null 2>&1

@@ -22,18 +22,34 @@ An example `docker-compose.yml` has also been provided in the repo which include
 ```
 docker create \
   --name=buildkite1 \
+  -e AGENT_CONTAINER=buildkite1 \
   -e BUILDKITE_AGENT_NAME=named-node-1 \
   -e BUILDKITE_AGENT_TOKEN=tokenhere \
   -e BUILDKITE_AGENT_TAGS=tags=here,moretags=here \
   -e BUILDKITE_AGENT_PRIORITY=priorityhere \
+  -e DOCKERD_ENABLED=false \
+  -e DOCKER_GID=971 \
+  -e DOCKER_HOST=unix:///var/run/docker.sock \
+  -e SUITE_SLOT=1 \
+  -e SUITE_TMP=/buildkite/tmp/1 \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Australia/Melbourne \
-  -v <path to data>/ssh:/buildkite/.ssh \
-  -v <path to data>/cache:/buildkite/.cache \
-  -v <path to data>/go:/buildkite/.go \
-  -v <path to data>/pnpm-store:/buildkite/.local/share/pnpm/store \
-  -v <path to data>/hooks:/buildkite/hooks \
+  -v /buildkite/.cache:/buildkite/.cache \
+  -v /buildkite/.git-credentials:/buildkite/.git-credentials \
+  -v /buildkite/.gitconfig:/buildkite/.gitconfig \
+  -v /buildkite/.gnupg:/buildkite/.gnupg \
+  -v /buildkite/.go:/buildkite/.go \
+  -v /buildkite/.local/share/pnpm/store:/buildkite/.local/share/pnpm/store \
+  -v /buildkite/.sign:/buildkite/.sign \
+  -v /buildkite/.ssh:/buildkite/.ssh \
+  -v /buildkite/.tools:/buildkite/.tools \
+  -v /buildkite/builds:/buildkite/builds \
+  -v /buildkite/hooks:/buildkite/hooks \
+  -v /buildkite/tmp/1:/buildkite/tmp/1 \
+  -v /buildkite/tmp/1:/tmp \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --group-add 971 \
   --restart unless-stopped \
   --privileged \
   authelia/buildkite
@@ -50,40 +66,74 @@ services:
     image: authelia/buildkite
     container_name: buildkite1
     privileged: true
+    group_add:
+      - "971"
     volumes:
-      - <path to data>/ssh:/buildkite/.ssh \
-      - <path to data>/cache:/buildkite/.cache \
-      - <path to data>/go:/buildkite/.go \
-      - <path to data>/pnpm-store:/buildkite/.local/share/pnpm/store \
-      - <path to data>/hooks:/buildkite/hooks
+      - /buildkite/.cache:/buildkite/.cache
+      - /buildkite/.git-credentials:/buildkite/.git-credentials
+      - /buildkite/.gitconfig:/buildkite/.gitconfig
+      - /buildkite/.gnupg:/buildkite/.gnupg
+      - /buildkite/.go:/buildkite/.go
+      - /buildkite/.local/share/pnpm/store:/buildkite/.local/share/pnpm/store
+      - /buildkite/.sign:/buildkite/.sign
+      - /buildkite/.ssh:/buildkite/.ssh
+      - /buildkite/.tools:/buildkite/.tools
+      - /buildkite/builds:/buildkite/builds
+      - /buildkite/hooks:/buildkite/hooks
+      - /buildkite/tmp/1:/buildkite/tmp/1
+      - /buildkite/tmp/1:/tmp
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
     environment:
+      - AGENT_CONTAINER=buildkite1
       - BUILDKITE_AGENT_NAME=named-node-1
       - BUILDKITE_AGENT_TOKEN=tokenhere
       - BUILDKITE_AGENT_TAGS=tags=here,moretags=here
       - BUILDKITE_AGENT_PRIORITY=priorityhere
+      - DOCKERD_ENABLED=false
+      - DOCKER_GID=971
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SUITE_SLOT=1
+      - SUITE_TMP=/buildkite/tmp/1
       - PUID=1000
       - PGID=1000
       - TZ=Australia/Melbourne
 ```
+
+The bind mount sources are resolved by whichever daemon creates the container, so when the agent runs against the host daemon every path under `/buildkite` has to be identical on the host and inside the container.
+
 ## Parameters
 
 Container images are configured using parameters passed at runtime (such as those above). These parameters are separated by a colon and indicate `<external>:<internal>` respectively. For example, `-p 8080:80` would expose port `80` from inside the container to be accessible from the host's IP on port `8080` outside the container.
 
 |                     Parameter                     | Function                                                                                                                                                                                                                                                         |
 |:-------------------------------------------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|          `-e AGENT_CONTAINER=buildkite1`          | name of this agent container, consumed by the Authelia suites                                                                                                                                                                                                    |
 |      `-e BUILDKITE_AGENT_NAME=named-node-1`       | [agent name](https://buildkite.com/docs/agent/v3/configuration) for buildkite agent on specified node                                                                                                                                                            |
 |       `-e BUILDKITE_AGENT_TOKEN=tokenhere`        | [agent token](https://buildkite.com/docs/agent/v3/tokens) for specified pipeline                                                                                                                                                                                 |
 | `-e BUILDKITE_AGENT_TAGS=tags=here,moretags=here` | [agent tags](https://buildkite.com/docs/agent/v3/cli-start#setting-tags) on specified node, tag=value comma separated                                                                                                                                            |
 |          `-e BUILDKITE_AGENT_PRIORITY=1`          | [agent priority](https://buildkite.com/docs/agent/v3/prioritization)                                                                                                                                                                                             |
+|            `-e DOCKERD_ENABLED=false`             | run against the host's docker daemon instead of starting the in-container one, requires the host socket to be mounted                                                                                                                                            |
+|                `-e DOCKER_GID=971`                | gid of the `docker` group on the host, added as a supplementary group on the `buildkite` user so the mounted socket is writable                                                                                                                                  |
+|   `-e DOCKER_HOST=unix:///var/run/docker.sock`    | daemon socket used by the agent and its build steps                                                                                                                                                                                                              |
+|                 `-e SUITE_SLOT=1`                 | slot number for this agent on the host, consumed by the Authelia suites so concurrent runs cannot collide on compose project name, subnet or ports                                                                                                               |
+|          `-e SUITE_TMP=/buildkite/tmp/1`          | temporary directory for this slot, mounted at the same path on the host and at `/tmp` in the container                                                                                                                                                           |
 |                  `-e PUID=1000`                   | for UserID - see below for explanation                                                                                                                                                                                                                           |
 |                  `-e PGID=1000`                   | for GroupID - see below for explanation                                                                                                                                                                                                                          |
 |            `-e TZ=Australia/Melbourne`            | for setting timezone information, eg Australia/Melbourne                                                                                                                                                                                                         |
-|               `-v /buildkite/.ssh`                | SSH `id_rsa` and `ida_rsa.pub` stored here for [GitHub cloning](https://buildkite.com/docs/agent/v3/ssh-keys)                                                                                                                                                    |
 |              `-v /buildkite/.cache`               | set this location to share cache for go-build and golangci-lint between multiple node containers                                                                                                                                                                 |
+|         `-v /buildkite/.git-credentials`          | git credentials used for authenticated clones and pushes                                                                                                                                                                                                         |
+|            `-v /buildkite/.gitconfig`             | git configuration for the `buildkite` user                                                                                                                                                                                                                       |
+|              `-v /buildkite/.gnupg`               | GnuPG keyring used to sign commits and tags                                                                                                                                                                                                                      |
 |                `-v /buildkite/.go`                | $GOPATH, set this location to share cache between multiple node containers                                                                                                                                                                                       |
 |      `-v /buildkite/.local/share/pnpm/store`      | set this location to share pnpm cache between multiple node containers                                                                                                                                                                                           |
+|               `-v /buildkite/.sign`               | signing material used by the release steps                                                                                                                                                                                                                       |
+|               `-v /buildkite/.ssh`                | SSH `id_rsa` and `ida_rsa.pub` stored here for [GitHub cloning](https://buildkite.com/docs/agent/v3/ssh-keys)                                                                                                                                                    |
+|              `-v /buildkite/.tools`               | toolchain (go, goreleaser, grype, syft) published out of the image on start so the crossbuild container can mount it                                                                                                                                             |
+|              `-v /buildkite/builds`               | agent build checkouts                                                                                                                                                                                                                                            |
 |               `-v /buildkite/hooks`               | Directory used to provide [agent based hooks](https://buildkite.com/docs/agent/v3/hooks) `/buildkite/hooks/environment` is used to provide secrets in to Buildkite such as `DOCKER_USERNAME` `DOCKER_PASSWORD` and `GITHUB_TOKEN` for publish and clean up steps |
+|               `-v /buildkite/tmp/1`               | per slot temporary directory, also mounted at `/tmp`                                                                                                                                                                                                             |
+|             `-v /var/run/docker.sock`             | host docker socket, required when `DOCKERD_ENABLED=false`                                                                                                                                                                                                        |
 
 ## User / Group Identifiers
 
@@ -99,6 +149,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **13/08/2026:** Add docker outside of docker support via DOCKERD_ENABLED and publish the toolchain to /buildkite/.tools
 - **12/08/2026:** Update buildkite agent (v3.137.0), buildx (v0.36.1), gh (v2.97.0), goreleaser (v2.17.1), grype (v0.117.0), kubectl (v1.36.3), pnpm (v11.21.0), s6-overlay (v3.2.3.2), syft (v1.51.0) and typos (v1.49.0)
 - **12/07/2026:** Update buildkite agent (v3.132.0), buildx (v0.35.0), gh (v2.96.0), goreleaser (v2.17.0), grype (v0.115.0), helm (v4.2.3), kubectl (v1.36.2), pnpm (v11.11.0), syft (v1.46.0) and typos (v1.48.0)
 - **10/06/2026:** Update buildkite agent (v3.127.2), grype (v0.114.0), pnpm (v11.5.2) and syft (v1.45.1)
