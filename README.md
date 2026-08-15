@@ -149,6 +149,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **15/08/2026:** Update gotestsum (v1.13.0) and helm (v4.2.4)
 - **13/08/2026:** Add docker outside of docker support via DOCKERD_ENABLED and publish the toolchain to /buildkite/.tools
 - **12/08/2026:** Update buildkite agent (v3.137.0), buildx (v0.36.1), gh (v2.97.0), goreleaser (v2.17.1), grype (v0.117.0), kubectl (v1.36.3), pnpm (v11.21.0), s6-overlay (v3.2.3.2), syft (v1.51.0) and typos (v1.49.0)
 - **12/07/2026:** Update buildkite agent (v3.132.0), buildx (v0.35.0), gh (v2.96.0), goreleaser (v2.17.0), grype (v0.115.0), helm (v4.2.3), kubectl (v1.36.2), pnpm (v11.11.0), syft (v1.46.0) and typos (v1.48.0)

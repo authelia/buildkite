@@ -31,6 +31,7 @@ var versionListGitHub = map[string]string{
 	"docker/buildx":              "buildx",
 	"golangci/golangci-lint":     "golangci-lint",
 	"goreleaser/goreleaser":      "goreleaser",
+	"gotestyourself/gotestsum":   "gotestsum",
 	"helm/chart-releaser":        "chart-releaser",
 	"helm/chart-testing":         "chart-testing",
 	"helm/helm":                  "helm",

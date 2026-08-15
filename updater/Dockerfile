@@ -12,6 +12,7 @@ ARG CT_VERSION="{{ index .Versions "chart-testing" }}"
 ARG GH_VERSION="{{ .Versions.gh }}"
 ARG GOLANGCILINT_VERSION="{{ index .Versions "golangci-lint" }}"
 ARG GORELEASER_VERSION="{{ .Versions.goreleaser }}"
+ARG GOTESTSUM_VERSION="{{ .Versions.gotestsum }}"
 ARG GRYPE_VERSION="{{ .Versions.grype }}"
 ARG HELM_VERSION="{{ .Versions.helm }}"
 ARG KUBECTL_VERSION="{{ .Versions.kubectl }}"
@@ -60,7 +61,6 @@ RUN <<EOF
 	set -eo pipefail
 	echo "**** Install Authelia CI pre-requisites ****"
     echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-    echo "@edget http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 	apk add --no-cache \
 		apt \
 		bash \
@@ -74,8 +74,6 @@ RUN <<EOF
 		gettext \
 		git \
 		go@edge \
-		gotestsum \
-		hub@edget \
 		jq \
 		libc6-compat \
 		libstdc++ \
@@ -143,6 +141,9 @@ RUN <<EOF
 	curl -sSfL -o shellcheck.tar.xz "https://github.com/koalaman/shellcheck/releases/download/v${SHELLCHECK_VERSION}/shellcheck-v${SHELLCHECK_VERSION}.linux.${ARCH_ALT}.tar.xz"
 	tar xfJ shellcheck.tar.xz -C /usr/local/bin --strip-components=1 shellcheck-v${SHELLCHECK_VERSION}/shellcheck
 	npm add --global markdownlint-cli
+	echo "**** Install Test tools ****"
+	curl -sSfL -o gotestsum.tar.gz "https://github.com/gotestyourself/gotestsum/releases/download/v${GOTESTSUM_VERSION}/gotestsum_${GOTESTSUM_VERSION}_linux_${ARCH}.tar.gz"
+	tar xfz gotestsum.tar.gz -C /usr/bin gotestsum
 	echo "**** Install Coverage tools ****"
 	curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov"
 	chmod +x /usr/local/bin/codecov
