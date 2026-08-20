@@ -149,6 +149,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **20/08/2026:** Update golangci-lint (v2.13.0) and pnpm (v11.22.0)
 - **15/08/2026:** Move the s6-overlay user bundle to /etc/s6-overlay/user-bundles.d
 - **15/08/2026:** Update gotestsum (v1.13.0) and helm (v4.2.4)
 - **13/08/2026:** Add docker outside of docker support via DOCKERD_ENABLED and publish the toolchain to /buildkite/.tools
