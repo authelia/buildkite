@@ -149,6 +149,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **24/08/2026:** Update buildkite agent (v3.137.1), goreleaser (v2.18.0) and pnpm (v11.23.0)
 - **21/08/2026:** Update gh (v2.98.0), golangci-lint (v2.13.1) and kubectl (v1.36.4)
 - **20/08/2026:** Update golangci-lint (v2.13.0) and pnpm (v11.22.0)
 - **15/08/2026:** Move the s6-overlay user bundle to /etc/s6-overlay/user-bundles.d
