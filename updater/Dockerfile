@@ -147,8 +147,8 @@ RUN <<EOF
 	curl -sSfL -o gotestsum.tar.gz "https://github.com/gotestyourself/gotestsum/releases/download/v${GOTESTSUM_VERSION}/gotestsum_${GOTESTSUM_VERSION}_linux_${ARCH}.tar.gz"
 	tar xfz gotestsum.tar.gz -C /usr/bin gotestsum
 	echo "**** Install Coverage tools ****"
-	curl -sSfL -o /usr/local/bin/codecov "https://github.com/codecov/codecov-cli/releases/download/v${CODECOV_VERSION}/codecovcli_alpine_${ARCH_ALT}"
-	chmod +x /usr/local/bin/codecov
+	curl -sSfL -o /usr/local/bin/codecovcli "https://github.com/codecov/codecov-cli/releases/download/v${CODECOV_VERSION}/codecovcli_alpine_${ARCH_ALT}"
+	chmod +x /usr/local/bin/codecovcli
 	npm add --global nyc
 	echo "**** Install Release tools ****"
 	npm add --global conventional-changelog conventional-changelog-angular
