@@ -6,6 +6,7 @@ ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
 ARG BUILDKITE_VERSION="{{ index .Versions "buildkite agent" }}"
 ARG BUILDX_VERSION="{{ .Versions.buildx }}"
+ARG CODECOV_VERSION="{{ .Versions.codecov }}"
 # Authelia fork
 ARG CR_VERSION="{{ index .Versions "chart-releaser" }}"
 ARG CT_VERSION="{{ index .Versions "chart-testing" }}"
@@ -86,6 +87,7 @@ RUN <<EOF
 		py3-wheel \
 		yamllint \
 		python3 \
+		reuse \
 		rsync \
 		shadow \
 		sudo \
@@ -145,8 +147,8 @@ RUN <<EOF
 	curl -sSfL -o gotestsum.tar.gz "https://github.com/gotestyourself/gotestsum/releases/download/v${GOTESTSUM_VERSION}/gotestsum_${GOTESTSUM_VERSION}_linux_${ARCH}.tar.gz"
 	tar xfz gotestsum.tar.gz -C /usr/bin gotestsum
 	echo "**** Install Coverage tools ****"
-	curl -sSfL -o /usr/local/bin/codecov "https://uploader.codecov.io/latest/alpine/codecov"
-	chmod +x /usr/local/bin/codecov
+	curl -sSfL -o /usr/local/bin/codecovcli "https://github.com/codecov/codecov-cli/releases/download/v${CODECOV_VERSION}/codecovcli_alpine_${ARCH_ALT}"
+	chmod +x /usr/local/bin/codecovcli
 	npm add --global nyc
 	echo "**** Install Release tools ****"
 	npm add --global conventional-changelog conventional-changelog-angular

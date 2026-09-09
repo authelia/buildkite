@@ -27,6 +27,7 @@ var versionListGitHub = map[string]string{
 	"anchore/syft":               "syft",
 	"buildkite/agent":            "buildkite agent",
 	"cli/cli":                    "gh",
+	"codecov/codecov-cli":        "codecov",
 	"crate-ci/typos":             "typos",
 	"docker/buildx":              "buildx",
 	"golangci/golangci-lint":     "golangci-lint",
