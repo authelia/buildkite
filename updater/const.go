@@ -39,5 +39,6 @@ var versionListGitHub = map[string]string{
 	"just-containers/s6-overlay": "s6-overlay",
 	"koalaman/shellcheck":        "shellcheck",
 	"kubernetes/kubernetes":      "kubectl",
+	"ossf/scorecard":             "scorecard",
 	"reviewdog/reviewdog":        "reviewdog",
 }

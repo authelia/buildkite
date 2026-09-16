@@ -20,6 +20,7 @@ ARG KUBECTL_VERSION="{{ .Versions.kubectl }}"
 ARG OVERLAY_VERSION="{{ index .Versions "s6-overlay" }}"
 ARG PNPM_VERSION="{{ .Versions.pnpm }}"
 ARG REVIEWDOG_VERSION="{{ .Versions.reviewdog }}"
+ARG SCORECARD_VERSION="{{ .Versions.scorecard }}"
 ARG SHELLCHECK_VERSION="{{ .Versions.shellcheck }}"
 ARG SYFT_VERSION="{{ .Versions.syft }}"
 ARG TYPOS_VERSION="{{ .Versions.typos }}"
@@ -158,6 +159,8 @@ RUN <<EOF
 	apk add --allow-untrusted goreleaser.apk
 	curl -sSfL https://get.anchore.io/grype | sh -s -- -b /usr/local/bin v${GRYPE_VERSION}
 	curl -sSfL https://get.anchore.io/syft | sh -s -- -b /usr/local/bin v${SYFT_VERSION}
+	curl -sSfL -o scorecard.tar.gz "https://github.com/ossf/scorecard/releases/download/v${SCORECARD_VERSION}/scorecard_${SCORECARD_VERSION}_linux_${ARCH}.tar.gz"
+	tar xfz scorecard.tar.gz -C /usr/local/bin scorecard
 	echo "**** Cleanup ****"
 	find /usr/local/bin/ -not -user root -exec chown root:root {} +
 	rm -rf /tmp/* /buildkite/.pnpm-store

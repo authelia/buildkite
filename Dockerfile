@@ -4,13 +4,13 @@ LABEL org.opencontainers.image.authors="Authelia Team <team@authelia.com>"
 
 ARG ARCH="amd64"
 ARG ARCH_ALT="x86_64"
-ARG BUILDKITE_VERSION="4.0.2"
-ARG BUILDX_VERSION="0.37.0"
+ARG BUILDKITE_VERSION="4.0.3"
+ARG BUILDX_VERSION="0.37.1"
 ARG CODECOV_VERSION="11.3.1"
 # Authelia fork
 ARG CR_VERSION="1.6.1"
 ARG CT_VERSION="3.14.0"
-ARG GH_VERSION="2.100.0"
+ARG GH_VERSION="2.101.0"
 ARG GOLANGCILINT_VERSION="2.13.2"
 ARG GORELEASER_VERSION="2.18.1"
 ARG GOTESTSUM_VERSION="1.13.0"
@@ -18,11 +18,12 @@ ARG GRYPE_VERSION="0.118.0"
 ARG HELM_VERSION="4.3.0"
 ARG KUBECTL_VERSION="1.37.0"
 ARG OVERLAY_VERSION="3.2.3.2"
-ARG PNPM_VERSION="12.3.4"
-ARG REVIEWDOG_VERSION="0.21.0"
+ARG PNPM_VERSION="12.4.2"
+ARG REVIEWDOG_VERSION="0.21.1"
+ARG SCORECARD_VERSION="5.5.0"
 ARG SHELLCHECK_VERSION="0.11.0"
 ARG SYFT_VERSION="1.51.1"
-ARG TYPOS_VERSION="1.50.1"
+ARG TYPOS_VERSION="1.50.2"
 
 ENV \
 	PATH="$PATH:/buildkite/.go/bin" \
@@ -158,6 +159,8 @@ RUN <<EOF
 	apk add --allow-untrusted goreleaser.apk
 	curl -sSfL https://get.anchore.io/grype | sh -s -- -b /usr/local/bin v${GRYPE_VERSION}
 	curl -sSfL https://get.anchore.io/syft | sh -s -- -b /usr/local/bin v${SYFT_VERSION}
+	curl -sSfL -o scorecard.tar.gz "https://github.com/ossf/scorecard/releases/download/v${SCORECARD_VERSION}/scorecard_${SCORECARD_VERSION}_linux_${ARCH}.tar.gz"
+	tar xfz scorecard.tar.gz -C /usr/local/bin scorecard
 	echo "**** Cleanup ****"
 	find /usr/local/bin/ -not -user root -exec chown root:root {} +
 	rm -rf /tmp/* /buildkite/.pnpm-store
