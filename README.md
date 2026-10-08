@@ -149,6 +149,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **08/10/2026:** Switch gotestsum to the authelia fork (v1.13.0-authelia.1)
 - **02/10/2026:** Update buildkite agent (v4.1.0) and syft (v1.54.0)
 - **01/10/2026:** Update buildkite agent (v4.0.9), buildx (v0.37.2), gh (v2.102.0), golangci-lint (v2.14.0), kubectl (v1.37.1), pnpm (v12.8.1) and typos (v1.50.3)
 - **24/09/2026:** Update buildkite agent (v4.0.6), kubectl (v1.37.1) and pnpm (v12.6.0)

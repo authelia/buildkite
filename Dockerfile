@@ -13,7 +13,8 @@ ARG CT_VERSION="3.14.0"
 ARG GH_VERSION="2.102.0"
 ARG GOLANGCILINT_VERSION="2.14.0"
 ARG GORELEASER_VERSION="2.18.2"
-ARG GOTESTSUM_VERSION="1.13.0"
+# Authelia fork
+ARG GOTESTSUM_VERSION="1.13.0-authelia.1"
 ARG GRYPE_VERSION="0.119.0"
 ARG HELM_VERSION="4.3.0"
 ARG KUBECTL_VERSION="1.37.1"
@@ -145,7 +146,7 @@ RUN <<EOF
 	tar xfJ shellcheck.tar.xz -C /usr/local/bin --strip-components=1 shellcheck-v${SHELLCHECK_VERSION}/shellcheck
 	npm add --global markdownlint-cli
 	echo "**** Install Test tools ****"
-	curl -sSfL -o gotestsum.tar.gz "https://github.com/gotestyourself/gotestsum/releases/download/v${GOTESTSUM_VERSION}/gotestsum_${GOTESTSUM_VERSION}_linux_${ARCH}.tar.gz"
+	curl -sSfL -o gotestsum.tar.gz "https://github.com/authelia/gotestsum/releases/download/v${GOTESTSUM_VERSION}/gotestsum_${GOTESTSUM_VERSION}_linux_${ARCH}.tar.gz"
 	tar xfz gotestsum.tar.gz -C /usr/bin gotestsum
 	echo "**** Install Coverage tools ****"
 	curl -sSfL -o /usr/local/bin/codecovcli "https://github.com/codecov/codecov-cli/releases/download/v${CODECOV_VERSION}/codecovcli_alpine_${ARCH_ALT}"

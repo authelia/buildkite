@@ -2,7 +2,7 @@ package main
 
 import "regexp"
 
-var patternVersion = regexp.MustCompile(`^ARG ([A-Z_]+)_VERSION="(\d+\.\d+\.\d+(\.\d+)?)"$`)
+var patternVersion = regexp.MustCompile(`^ARG ([A-Z_]+)_VERSION="(\d+\.\d+\.\d+(\.\d+)?(?:-[0-9A-Za-z.]+)?)"$`)
 
 var currentVersionMap = map[string]string{
 	"GOLANGCILINT": "golangci-lint",
@@ -14,6 +14,7 @@ var currentVersionMap = map[string]string{
 
 var frozenVersions = []string{
 	"chart-releaser",
+	"gotestsum",
 }
 
 // versionListNPM maps the npm package name (key) to the internal package name (value).
@@ -32,7 +33,7 @@ var versionListGitHub = map[string]string{
 	"docker/buildx":              "buildx",
 	"golangci/golangci-lint":     "golangci-lint",
 	"goreleaser/goreleaser":      "goreleaser",
-	"gotestyourself/gotestsum":   "gotestsum",
+	"authelia/gotestsum":         "gotestsum",
 	"helm/chart-releaser":        "chart-releaser",
 	"helm/chart-testing":         "chart-testing",
 	"helm/helm":                  "helm",

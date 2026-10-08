@@ -13,6 +13,7 @@ ARG CT_VERSION="{{ index .Versions "chart-testing" }}"
 ARG GH_VERSION="{{ .Versions.gh }}"
 ARG GOLANGCILINT_VERSION="{{ index .Versions "golangci-lint" }}"
 ARG GORELEASER_VERSION="{{ .Versions.goreleaser }}"
+# Authelia fork
 ARG GOTESTSUM_VERSION="{{ .Versions.gotestsum }}"
 ARG GRYPE_VERSION="{{ .Versions.grype }}"
 ARG HELM_VERSION="{{ .Versions.helm }}"
@@ -145,7 +146,7 @@ RUN <<EOF
 	tar xfJ shellcheck.tar.xz -C /usr/local/bin --strip-components=1 shellcheck-v${SHELLCHECK_VERSION}/shellcheck
 	npm add --global markdownlint-cli
 	echo "**** Install Test tools ****"
-	curl -sSfL -o gotestsum.tar.gz "https://github.com/gotestyourself/gotestsum/releases/download/v${GOTESTSUM_VERSION}/gotestsum_${GOTESTSUM_VERSION}_linux_${ARCH}.tar.gz"
+	curl -sSfL -o gotestsum.tar.gz "https://github.com/authelia/gotestsum/releases/download/v${GOTESTSUM_VERSION}/gotestsum_${GOTESTSUM_VERSION}_linux_${ARCH}.tar.gz"
 	tar xfz gotestsum.tar.gz -C /usr/bin gotestsum
 	echo "**** Install Coverage tools ****"
 	curl -sSfL -o /usr/local/bin/codecovcli "https://github.com/codecov/codecov-cli/releases/download/v${CODECOV_VERSION}/codecovcli_alpine_${ARCH_ALT}"
