@@ -149,6 +149,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 ```
 
 ## Version
+- **21/10/2026:** Update buildkite agent (v4.7.0), buildx (v0.38.1), gh (v2.102.1), golangci-lint (v2.15.0), grype (v0.121.0), pnpm (v12.14.0) and syft (v1.55.0)
 - **16/10/2026:** Update buildkite agent (v4.6.0) and helm (v4.3.1)
 - **14/10/2026:** Update buildkite agent (v4.4.0), goreleaser (v2.18.3), pnpm (v12.11.2) and scorecard (v5.6.0)
 - **08/10/2026:** Update buildkite agent (v4.3.0), buildx (v0.38.0), chart-testing (v3.15.0), grype (v0.120.1), pnpm (v12.10.1), syft (v1.54.1) and typos (v1.51.1)
